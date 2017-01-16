@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 public class DisplayWordlists extends HttpServlet {
 
     /**
-     * JSP file to display
-     */
-    private static final String VIEW = "/WEB-INF/wordlists.jsp";
-
-    /**
      * Name of the request attribute containing the Map
      */
     private static final String ATT_MAP_BY_LANGUAGES = "mapByLanguages";
+
+    /**
+     * JSP file to display
+     */
+    private static final String VIEW = "/WEB-INF/wordlists.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

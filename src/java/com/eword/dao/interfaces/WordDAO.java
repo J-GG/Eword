@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public interface WordDAO {
 
     /**
-     * Finds all the words of a wordlist.
+     * Find all the words associated with the id of the wordlist
      *
-     * @param wordlistId ID of the wordlist
+     * @param wordlistId The id of the wordlist
      * @return a list of words
      */
     ArrayList<Word> findAll(int wordlistId);
