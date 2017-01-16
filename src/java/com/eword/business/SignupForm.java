@@ -1,6 +1,7 @@
 package com.eword.business;
 
 import com.eword.beans.User;
+import com.eword.dao.DAOFactory;
 import com.eword.dao.interfaces.UserDAO;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class SignupForm {
 
     private static final String PARAM_PASSWORD = "password";
     private static final String PARAM_USERNAME = "username";
+    private static final UserDAO USER_DAO = DAOFactory.getInstance().getUserDAO();
 
     private HashMap<String, String> erreurs = new HashMap<>();
     private String result;
@@ -53,13 +55,13 @@ public class SignupForm {
         }
     }
 
-    public User signupValidation(HttpServletRequest req, UserDAO userDAO) {
+    public User signupValidation(HttpServletRequest req) {
         String username = req.getParameter(PARAM_USERNAME).trim();
         String password = req.getParameter(PARAM_PASSWORD).trim();
         User user = new User();
 
         try {
-            usernameValidation(username, userDAO);
+            usernameValidation(username);
         } catch (Exception ex) {
             erreurs.put(PARAM_USERNAME, ex.getMessage());
         }
@@ -75,7 +77,7 @@ public class SignupForm {
         user.setPassword(sha256(password));
 
         if (erreurs.isEmpty()) {
-            userDAO.create(user);
+            USER_DAO.create(user);
 
             result = "You successfully registered ! We're pleased that you have chosen to become part of the community.<br />\n"
                     + "            <ul>\n"
@@ -89,13 +91,13 @@ public class SignupForm {
         return user;
     }
 
-    private void usernameValidation(String username, UserDAO userDAO) throws Exception {
+    private void usernameValidation(String username) throws Exception {
         if (username != null) {
             if (username.length() < 4 || username.length() > 30) {
                 throw new Exception("The username must be more than 4 and less than 30 characters long");
             } else if (!username.matches("^[a-zA-Z0-9_\\.]+$")) {
                 throw new Exception("The username can only consist of alphabetical, number, dot and underscore");
-            } else if (userDAO.exist(username)) {
+            } else if (USER_DAO.exist(username)) {
                 throw new Exception("The username already exists");
             }
         } else {

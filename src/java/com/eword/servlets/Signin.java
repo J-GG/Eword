@@ -14,22 +14,16 @@ import javax.servlet.http.HttpSession;
 
 public class Signin extends HttpServlet {
 
-    private static final String ATT_DAOFACTORY = "daofactory";
     private static final String ATT_LANG = "language";
     private static final String ATT_USER_ID = "user_id";
-    private UserDAO userDAO;
-
-    @Override
-    public void init() throws ServletException {
-        userDAO = ((DAOFactory) getServletContext().getAttribute(ATT_DAOFACTORY)).getUserDAO();
-    }
+    private static final UserDAO USER_DAO = DAOFactory.getInstance().getUserDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = SignupForm.sha256(req.getParameter("password"));
 
-        User user = userDAO.find(username, password);
+        User user = USER_DAO.find(username, password);
         boolean authenticate = (user != null ? true : false);
         String message = "\"This user doesn't exist\"";
 
