@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Error404 extends HttpServlet {
 
+    /**
+     * JSP file to display
+     */
     private static final String VIEW = "/WEB-INF/404.jsp";
 
     @Override

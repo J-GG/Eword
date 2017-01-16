@@ -11,9 +11,12 @@ public class Signout extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //The session is destroyed
         HttpSession session = req.getSession();
         session.invalidate();
 
+        //The user is redirected to the last page visited or to the home page
         String address = req.getHeader("referer");
         if (address == null) {
             address = req.getContextPath();

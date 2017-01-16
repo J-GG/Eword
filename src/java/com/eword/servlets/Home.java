@@ -10,13 +10,23 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Home extends HttpServlet {
 
-    private static final String VIEW = "/WEB-INF/index.jsp";
+    /**
+     * Name of the request attribute containing a Quote object
+     */
     private static final String ATT_QUOTE = "quote";
+
+    /**
+     * JSP file to display
+     */
+    private static final String VIEW = "/WEB-INF/index.jsp";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //A random quote is selected and set as a request attribute
         Quote quote = QuoteBusiness.getRandomQuote();
         req.setAttribute(ATT_QUOTE, quote);
+
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
     }
 

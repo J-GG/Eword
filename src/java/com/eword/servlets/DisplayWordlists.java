@@ -12,13 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DisplayWordlists extends HttpServlet {
 
+    /**
+     * JSP file to display
+     */
     private static final String VIEW = "/WEB-INF/wordlists.jsp";
+
+    /**
+     * Name of the request attribute containing the Map
+     */
     private static final String ATT_MAP_BY_LANGUAGES = "mapByLanguages";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //a Map of Wordlist objects sorted by languages is retrieved and set into a request attribute
         Map<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages = WordlistBusiness.mapByLanguages();
         req.setAttribute(ATT_MAP_BY_LANGUAGES, mapByLanguages);
+
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);
     }
 
