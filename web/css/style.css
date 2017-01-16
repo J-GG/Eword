@@ -1,0 +1,253 @@
+/** Navbar **/
+
+.navbar-default,
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav >li > a:focus,
+.navbar-default .navbar-nav > li > a{
+    color: white;
+    background : #1582c2;
+    font-family: 'Calibri';
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+}
+
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > li > a:hover{
+    background: white;
+    color: #1582c2;
+}
+
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a
+{
+    background: white;
+    color: #1582c2;
+}
+
+.navbar-default .navbar-nav > .active a{
+    background: white;
+    color: #1582c2;
+}
+
+.navbar-default .navbar-nav li #signup
+{
+    background: #ED5565;
+    color: white;
+}
+
+.navbar-default .navbar-nav li #signup:hover
+{
+    background: white;
+    color: #ED5565;
+}
+
+.navbar-default .navbar-nav li #signup.active
+{
+    background: white;
+    color: #ED5565;
+}
+
+.dropdown-menu{
+    background: white;
+    border: 1px solid #1582c2;
+}
+
+.language_picker .dropdown-menu
+{
+    background: white;
+    border: 1px solid #1582c2
+}
+
+.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a
+{
+    color: white;
+}
+
+.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a:focus
+{
+    background: #EEE;
+}
+
+@media screen and (min-width: 768px) {
+
+    .dropdown-menu:before
+    {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-width: 0 8px 8px;
+        border-style: none solid solid;
+        border-color: transparent transparent #1582c2;
+        right: 0;
+        z-index: 3;
+    }
+
+    .signin_form_navbar .dropdown-menu:before
+    {
+        margin-right: 42px;
+        margin-top: -23px;
+    }
+
+    .language_picker .dropdown-menu:before
+    {
+        margin-right: 27px;
+        margin-top: -14px;
+    }
+
+    .navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a
+    {
+        color: black;
+    }
+
+    .navbar-default .signin_form_navbar
+    {
+        color: black;
+    }
+}
+
+
+
+/** Header **/
+
+header{
+    height: 100px;
+    background: #00bdf2;
+    margin-top: -20px;
+}
+
+.header_title
+{
+    color: white;
+    font-family: 'American Captain';
+    font-size: 48px;
+    margin-top: 15px;
+    z-index: 2;
+}
+
+.header_image
+{
+    background: url('../img/bb8.png');
+    width: 123px;
+    height: 72px;
+    margin-top: 28px;
+    margin-left: -100px;
+    z-index: 1;
+}
+
+/**  Content **/
+
+.content{
+    margin-bottom: 50px;
+}
+
+.quote_text
+{
+    font-size: 24px;
+    font-family: 'Pacifico';
+    color: #656565;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.quote_text:before
+{
+    content: url('../img/open-quote.png');
+    width: 38px;
+    height: 30px;
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+}
+
+.quote_text:after
+{
+    content: url('../img/close-quote.png');
+    width: 38px;
+    height: 30px;
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+
+.quote_author
+{
+    color: #656565;
+    font-family: 'Neris Thin';
+    font-size: 14px;
+    float: right;
+}
+
+.quote_separator hr
+{
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.home_list_right
+{
+    text-align: right;
+}
+
+h2
+{
+    margin-bottom: 35px;
+    color: #1582c2
+}
+
+/** Forms **/
+
+#signin_form .checkbox label
+{
+    padding-left: 20px;
+    top: -5px;
+    margin-bottom: 0px;
+}
+
+.form-group.has-error
+{
+    margin-bottom: 0px;
+}
+
+.password-progress {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.password-progress.progress {
+    margin-bottom: 0;
+}
+
+.has-success .add-on.input-group-addon{
+    background-color: #dff0d8;
+}
+
+.has-error .add-on.input-group-addon
+{
+    background-color: #f2dede;
+}
+
+.unmask_password
+{
+    cursor : pointer;
+}
+
+.loading
+{
+    background: url('../img/loader.gif') no-repeat center;
+}
+
+/** Footer **/
+
+footer
+{
+    background: black;
+    color: white;
+    text-align: center;
+}
