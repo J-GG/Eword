@@ -4,24 +4,37 @@ import com.eword.beans.Wordlist;
 import com.eword.dao.interfaces.WordlistDAO;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import org.bson.Document;
 
 public class WordlistDAOMongo implements WordlistDAO {
 
-    private final DAOFactoryMongo daoFactory;
+    /**
+     * Interface to access the MongoDB database
+     */
+    private final MongoDatabase MONGO_DATABASE;
 
-    WordlistDAOMongo(DAOFactoryMongo daoFactory) {
-        this.daoFactory = daoFactory;
+    /**
+     * Create an interface to access data regarding the wordlists
+     *
+     * @param database The database where data is stored
+     */
+    WordlistDAOMongo(MongoDatabase database) {
+        this.MONGO_DATABASE = database;
     }
 
     @Override
     public Wordlist find(int wordlistId) {
-        MongoCollection wordlistCollection = daoFactory.getConnection().getCollection("wordlist");
-        Document wordlistDocument = (Document) wordlistCollection.find(Filters.eq("wordlist_id", wordlistId)).first();
 
         Wordlist wordlist = null;
+        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
+
+        //We search for the wordlist with the given id
+        Document wordlistDocument = (Document) wordlistCollection.find(Filters.eq("wordlist_id", wordlistId)).first();
+
+        //If the document exists, a Wordlist object is created and populated with their information
         if (wordlistDocument != null) {
             wordlist = new Wordlist();
             wordlist.setId(wordlistDocument.getInteger("wordlist_id"));
@@ -35,11 +48,14 @@ public class WordlistDAOMongo implements WordlistDAO {
 
     @Override
     public ArrayList<Wordlist> findAll() {
-        MongoCollection wordlistCollection = daoFactory.getConnection().getCollection("wordlist");
-        MongoCursor cursor = wordlistCollection.find().iterator();
 
         ArrayList<Wordlist> wordlists = new ArrayList<>();
+        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
 
+        //We search for all the wordlists
+        MongoCursor cursor = wordlistCollection.find().iterator();
+
+        //For each wordlist
         while (cursor.hasNext()) {
             Document wordlistDocument = (Document) cursor.next();
             Wordlist wordlist = new Wordlist();

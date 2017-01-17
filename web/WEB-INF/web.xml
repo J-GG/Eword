@@ -25,9 +25,6 @@
         <filter-name>LoggedinFilter</filter-name>
         <url-pattern>/signup</url-pattern>
     </filter-mapping>
-    <listener>
-        <listener-class>com.eword.dao.InitialisationDAOFactory</listener-class>
-    </listener>
     <servlet>
         <servlet-name>DisplayWordlists</servlet-name>
         <servlet-class>com.eword.servlets.DisplayWordlists</servlet-class>

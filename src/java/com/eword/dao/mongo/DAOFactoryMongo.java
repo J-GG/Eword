@@ -18,26 +18,78 @@ import java.util.logging.Logger;
 
 public final class DAOFactoryMongo extends DAOFactory {
 
+    /**
+     * Address of the property file containing the information to connect to the
+     * MongoDB database
+     */
     private static final String PROPERTIES_FILE = "com/eword/dao/mongo/mongo.properties";
-    private static final String PROPERTY_HOST = "host";
-    private static final String PROPERTY_PORT = "port";
-    private static final String PROPERTY_DATABASE = "database";
+
+    /**
+     * Key to retrieve the name of the database containing the administrators of
+     * the MongoDB database
+     */
     private static final String PROPERTY_ADMINISTRATORS_DATABASE = "administrators_database";
-    private static final String PROPERTY_USERNAME = "username";
+
+    /**
+     * Key to retrieve the name of the database
+     */
+    private static final String PROPERTY_DATABASE = "database";
+
+    /**
+     * Key to retrieve the host
+     */
+    private static final String PROPERTY_HOST = "host";
+
+    /**
+     * Key to retrieve the password to be granted the access to the database
+     */
     private static final String PROPERTY_PASSWORD = "password";
 
-    private final MongoDatabase database;
+    /**
+     * Key to retrieve the port
+     */
+    private static final String PROPERTY_PORT = "port";
 
+    /**
+     * Key to retrieve the username to be granted the access to the database
+     */
+    private static final String PROPERTY_USERNAME = "username";
+
+    /**
+     * Unique instance of the class
+     */
     private static DAOFactoryMongo instance;
 
+    /**
+     * Instance of the database
+     */
+    private final MongoDatabase database;
+
+    /**
+     * Creates a connection to the MongoDB database
+     *
+     * @param host The host of the database
+     * @param port The port of the database
+     * @param database The name of the database
+     * @param administratorsDatabase The name of the database containing the
+     * administrators of the databases
+     * @param username The username to be granted the access to the database
+     * @param password The password to be granted the access to the database
+     */
     private DAOFactoryMongo(String host, int port, String database, String administratorsDatabase, String username, String password) {
         MongoCredential credential = MongoCredential.createCredential(username, administratorsDatabase, password.toCharArray());
         MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
         this.database = mongoClient.getDatabase(database);
     }
 
+    /**
+     * Return a unique instance of the class
+     *
+     * @return The unique instance of the class
+     */
     public static DAOFactoryMongo getInstance() {
 
+        //Information to connect to the database is extracted from a property file
         Properties properties = new Properties();
         String host = null;
         int port = 0;
@@ -61,6 +113,7 @@ public final class DAOFactoryMongo extends DAOFactory {
             Logger.getLogger(DAOFactoryMongo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        //If the instance doesn't already exist, it is created
         if (instance == null) {
             instance = new DAOFactoryMongo(host, port, database, administratorsDatabase, username, password);
         }
@@ -68,29 +121,24 @@ public final class DAOFactoryMongo extends DAOFactory {
         return instance;
     }
 
-    MongoDatabase getConnection() {
-
-        return database;
-    }
-
     @Override
     public QuoteDAO getQuoteDAO() {
-        return new QuoteDAOMongo(this);
-    }
-
-    @Override
-    public WordDAO getWordDAO() {
-        return new WordDAOMongo(this);
-    }
-
-    @Override
-    public WordlistDAO getWordlistDAO() {
-        return new WordlistDAOMongo(this);
+        return new QuoteDAOMongo(database);
     }
 
     @Override
     public UserDAO getUserDAO() {
-        return new UserDAOMongo(this);
+        return new UserDAOMongo(database);
+    }
+
+    @Override
+    public WordDAO getWordDAO() {
+        return new WordDAOMongo(database);
+    }
+
+    @Override
+    public WordlistDAO getWordlistDAO() {
+        return new WordlistDAOMongo(database);
     }
 
 }

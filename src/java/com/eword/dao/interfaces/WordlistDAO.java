@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public interface WordlistDAO {
 
     /**
-     * Find the wordlist associated with the id
+     * Find the wordlist associated with the id. The Wordlist doesn't contain
+     * the list of words
      *
      * @param wordlistId The id of the wordlist
      * @return The wordlist associated with the id
@@ -14,7 +15,7 @@ public interface WordlistDAO {
     Wordlist find(int wordlistId);
 
     /**
-     * List all the wordlists
+     * List all the wordlists The Wordlists don't contain the list of words
      *
      * @return A list of all the wordlists
      */
