@@ -3,22 +3,22 @@ package com.eword.beans;
 public class User {
 
     /**
-     * The id of the user
+     * Id of the user
      */
     private int id;
 
     /**
-     * The language of the user
+     * Language of the user
      */
     private String language = "us";
 
     /**
-     * The password of the user
+     * Password of the user
      */
     private String password;
 
     /**
-     * The username of the user
+     * Username of the user
      */
     private String username;
 

@@ -2,3 +2,4 @@ build.xml
 librairies/
 nbproject/private/
 build/
+/dist/
