@@ -46,7 +46,7 @@ public class Signup extends HttpServlet {
         SignupForm signupForm = new SignupForm();
         User user = signupForm.signupValidation(req);
 
-        if (signupForm.getErreurs().isEmpty()) {
+        if (signupForm.getErrors().isEmpty()) {
             //If there is no error, the SignupForm object is set as a session attribute and the page is reloaded (to avoid the forward and the refresh problem)
             HttpSession session = req.getSession();
             session.setAttribute(ATT_FORM, signupForm);

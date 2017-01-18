@@ -55,7 +55,7 @@ public class WordlistDAOMongo implements WordlistDAO {
         //We search for all the wordlists
         MongoCursor cursor = wordlistCollection.find().iterator();
 
-        //For each wordlist
+        //For each document, a Wordlist object is created with its information and added to the list
         while (cursor.hasNext()) {
             Document wordlistDocument = (Document) cursor.next();
             Wordlist wordlist = new Wordlist();

@@ -13,10 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 
 public class NavbarFilter implements Filter {
 
-    private static final String ATT_NAVBAR_HOME = "home";
-    private static final String ATT_NAVBAR_LISTS = "lists";
+    /**
+     * Name of the request attribute indicating on which tab the user is
+     */
     private static final String ATT_NAVBAR_NAME = "navbar";
-    private static final String ATT_NAVBAR_SIGNUP = "signup";
+
+    /**
+     * Value of the request attribute indicating that the user in on the home
+     * tab
+     */
+    private static final String NAVBAR_HOME = "home";
+
+    /**
+     * Value of the request attribute indicating that the user in on the lists
+     * tab
+     */
+    private static final String NAVBAR_LISTS = "lists";
+
+    /**
+     * Value of the request attribute indicating that the user in on the sign up
+     * tab
+     */
+    private static final String NAVBAR_SIGNUP = "signup";
 
     @Override
     public void destroy() {
@@ -24,23 +42,27 @@ public class NavbarFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        //Parameters are extracted from the request
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
+        //We compare the URL to patterns to determine on which tab is the user
         String context = req.getContextPath();
         Pattern pattern_home = Pattern.compile(context + "/$");
         Pattern pattern_lists = Pattern.compile(context + "/lists(/?)([0-9]*)$");
         Pattern pattern_signup = Pattern.compile(context + "/signup$");
-        String navbar = null;
 
+        String navbar = null;
         if (pattern_home.matcher(req.getRequestURI()).find()) {
-            navbar = ATT_NAVBAR_HOME;
+            navbar = NAVBAR_HOME;
         } else if (pattern_lists.matcher(req.getRequestURI()).find()) {
-            navbar = ATT_NAVBAR_LISTS;
+            navbar = NAVBAR_LISTS;
         } else if (pattern_signup.matcher(req.getRequestURI()).find()) {
-            navbar = ATT_NAVBAR_SIGNUP;
+            navbar = NAVBAR_SIGNUP;
         }
 
+        //The variable is set into a request attribute
         request.setAttribute(ATT_NAVBAR_NAME, navbar);
 
         chain.doFilter(req, res);

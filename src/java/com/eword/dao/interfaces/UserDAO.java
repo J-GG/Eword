@@ -5,14 +5,14 @@ import com.eword.beans.User;
 public interface UserDAO {
 
     /**
-     * Add a User object
+     * Add a User
      *
      * @param user The User to add
      */
     void create(User user);
 
     /**
-     * Find if a User with theusername exists
+     * Find if a User with the username exists
      *
      * @param username The username of the User to look for
      * @return True if a User with this username exists

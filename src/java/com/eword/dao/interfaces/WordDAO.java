@@ -6,10 +6,11 @@ import java.util.ArrayList;
 public interface WordDAO {
 
     /**
-     * Find all the words associated with the id of the wordlist
+     * Find all the Words of the wordlist from its id
      *
      * @param wordlistId The id of the wordlist
-     * @return a list of words
+     * @return a list of words or null if the id doesn't correpond to any
+     * wordlist
      */
     ArrayList<Word> findAll(int wordlistId);
 }

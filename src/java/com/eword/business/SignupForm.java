@@ -9,31 +9,37 @@ import javax.servlet.http.HttpServletRequest;
 
 public class SignupForm {
 
+    /**
+     * Name of the field of the form containing the password
+     */
     private static final String PARAM_PASSWORD = "password";
+
+    /**
+     * Name of the field of the form containing the username
+     */
     private static final String PARAM_USERNAME = "username";
+
+    /**
+     * Object enabling to communicate with the User data layer
+     */
     private static final UserDAO USER_DAO = DAOFactory.getInstance().getUserDAO();
 
-    private HashMap<String, String> erreurs = new HashMap<>();
+    /**
+     * Map of all the input errors
+     */
+    private HashMap<String, String> errors = new HashMap<>();
+
+    /**
+     * Message to display after the validation of the form
+     */
     private String result;
 
-    public HashMap<String, String> getErreurs() {
-        return erreurs;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    private void passwordValidation(String password) throws Exception {
-        if (password != null) {
-            if (password.length() < 4) {
-                throw new Exception("The password must be more than 4 characters long");
-            }
-        } else {
-            throw new Exception("A password is required");
-        }
-    }
-
+    /**
+     * Return the encryption of the password with SHA-256
+     *
+     * @param password The password to encrypt
+     * @return The encrypted password
+     */
     public static String sha256(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -55,28 +61,75 @@ public class SignupForm {
         }
     }
 
+    /**
+     * Return the map of errors
+     *
+     * @return The map of errors
+     */
+    public HashMap<String, String> getErrors() {
+        return errors;
+    }
+
+    /**
+     * Return the message to display after the validation of the form
+     *
+     * @return The message to display
+     */
+    public String getResult() {
+        return result;
+    }
+
+    /**
+     * Check whether the password is correct or not
+     *
+     * @param password The password to check. It can't be null and has a minimal
+     * size
+     */
+    private void passwordValidation(String password) throws Exception {
+        if (password != null) {
+            if (password.length() < 4) {
+                throw new Exception("The password must be more than 4 characters long");
+            }
+        } else {
+            throw new Exception("A password is required");
+        }
+    }
+
+    /**
+     * Check whether the form is correct or not. If it is correct, the user is
+     * added to the data and returned
+     *
+     * @param req The request
+     * @return A User with the information from the form
+     */
     public User signupValidation(HttpServletRequest req) {
-        String username = req.getParameter(PARAM_USERNAME).trim();
-        String password = req.getParameter(PARAM_PASSWORD).trim();
+
         User user = new User();
 
+        //Parameters are retrieved from the request
+        String username = req.getParameter(PARAM_USERNAME).trim();
+        String password = req.getParameter(PARAM_PASSWORD).trim();
+
+        //The username is validated and set
         try {
             usernameValidation(username);
         } catch (Exception ex) {
-            erreurs.put(PARAM_USERNAME, ex.getMessage());
+            errors.put(PARAM_USERNAME, ex.getMessage());
         }
         user.setUsername(username);
 
+        //The password is validated and set
         try {
             passwordValidation(password);
 
         } catch (Exception ex) {
-            erreurs.put(PARAM_PASSWORD, ex.getMessage());
+            errors.put(PARAM_PASSWORD, ex.getMessage());
         }
-
         user.setPassword(sha256(password));
 
-        if (erreurs.isEmpty()) {
+        //The result message depends on whether there are errors or not
+        if (errors.isEmpty()) {
+            //The user is added to the data
             USER_DAO.create(user);
 
             result = "You successfully registered ! We're pleased that you have chosen to become part of the community.<br />\n"
@@ -91,6 +144,11 @@ public class SignupForm {
         return user;
     }
 
+    /**
+     * Check whether the username is correct or not
+     *
+     * @param username The username to check
+     */
     private void usernameValidation(String username) throws Exception {
         if (username != null) {
             if (username.length() < 4 || username.length() > 30) {
@@ -103,6 +161,5 @@ public class SignupForm {
         } else {
             throw new Exception("The username is required");
         }
-
     }
 }

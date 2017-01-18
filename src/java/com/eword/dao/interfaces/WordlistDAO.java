@@ -10,7 +10,8 @@ public interface WordlistDAO {
      * the list of words
      *
      * @param wordlistId The id of the wordlist
-     * @return The wordlist associated with the id
+     * @return The wordlist associated with the id or null if the id doesn't
+     * correpond to any wordlist
      */
     Wordlist find(int wordlistId);
 

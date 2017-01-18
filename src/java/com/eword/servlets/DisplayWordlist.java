@@ -37,7 +37,7 @@ public class DisplayWordlist extends HttpServlet {
             //The id of the list is extracted from the URL
             int wordlistId = Integer.parseInt(matcher.group(1));
 
-            //A wordlist object containing the list of words is retrieved from the id of the wordlist
+            //A wordlist object containing the list of words is retrieved from the id of the wordlist and set into a request attribute
             Wordlist wordlist = WordlistBusiness.getPopulatedWordlist(wordlistId);
             req.setAttribute(ATT_WORDLIST, wordlist);
 
