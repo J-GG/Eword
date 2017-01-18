@@ -38,6 +38,7 @@ public class WordlistDAOMongo implements WordlistDAO {
         if (wordlistDocument != null) {
             wordlist = new Wordlist();
             wordlist.setId(wordlistDocument.getInteger("wordlist_id"));
+            wordlist.setUserId(wordlistDocument.getInteger("user"));
             wordlist.setTitle(wordlistDocument.getString("title"));
             wordlist.setSourceLanguage(wordlistDocument.getString("source"));
             wordlist.setDestinationLanguage(wordlistDocument.getString("destination"));
@@ -47,19 +48,20 @@ public class WordlistDAOMongo implements WordlistDAO {
     }
 
     @Override
-    public ArrayList<Wordlist> findAll() {
+    public ArrayList<Wordlist> findAll(int userId) {
 
         ArrayList<Wordlist> wordlists = new ArrayList<>();
         MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
-
+        System.out.println(userId);
         //We search for all the wordlists
-        MongoCursor cursor = wordlistCollection.find().iterator();
+        MongoCursor cursor = wordlistCollection.find(Filters.eq("user", userId)).iterator();
 
         //For each document, a Wordlist object is created with its information and added to the list
         while (cursor.hasNext()) {
             Document wordlistDocument = (Document) cursor.next();
             Wordlist wordlist = new Wordlist();
             wordlist.setId(wordlistDocument.getInteger("wordlist_id"));
+            wordlist.setUserId(wordlistDocument.getInteger("user"));
             wordlist.setTitle(wordlistDocument.getString("title"));
             wordlist.setSourceLanguage(wordlistDocument.getString("source"));
             wordlist.setDestinationLanguage(wordlistDocument.getString("destination"));

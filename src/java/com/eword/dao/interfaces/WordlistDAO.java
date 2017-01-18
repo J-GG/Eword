@@ -16,9 +16,11 @@ public interface WordlistDAO {
     Wordlist find(int wordlistId);
 
     /**
-     * List all the wordlists The Wordlists don't contain the list of words
+     * List all the user's wordlists. The Wordlists don't contain the list of
+     * words
      *
-     * @return A list of all the wordlists
+     * @param userId The user's id
+     * @return The user's list of wordlist
      */
-    ArrayList<Wordlist> findAll();
+    ArrayList<Wordlist> findAll(int userId);
 }

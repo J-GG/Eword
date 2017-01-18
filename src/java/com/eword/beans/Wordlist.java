@@ -25,6 +25,10 @@ public class Wordlist {
     private String title;
 
     /**
+     * The owner's id
+     */
+    private Integer userId;
+    /**
      * List of words
      */
     private ArrayList<Word> words;
@@ -111,6 +115,24 @@ public class Wordlist {
     }
 
     /**
+     * Return the owner's id
+     *
+     * @return The owner's id
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * Set the owner's id
+     *
+     * @param userId The owner's id
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
      * Return the list of Word of the wordlist
      *
      * @return The list of Word of the wordlist
@@ -136,4 +158,5 @@ public class Wordlist {
     public void removeWord(Word word) {
         words.remove(word);
     }
+
 }
