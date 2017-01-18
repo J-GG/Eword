@@ -37,9 +37,10 @@ public class LoggedoutFilter implements Filter {
         //If the user is not connected, they are redirected
         if (req.getSession().getAttribute(ATT_USER_ID) == null) {
             res.sendRedirect(address);
-        } else {
-            chain.doFilter(req, res);
+            return;
         }
+
+        chain.doFilter(req, res);
     }
 
     @Override
