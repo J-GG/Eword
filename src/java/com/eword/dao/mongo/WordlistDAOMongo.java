@@ -52,7 +52,7 @@ public class WordlistDAOMongo implements WordlistDAO {
 
         ArrayList<Wordlist> wordlists = new ArrayList<>();
         MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
-        System.out.println(userId);
+
         //We search for all the wordlists
         MongoCursor cursor = wordlistCollection.find(Filters.eq("user", userId)).iterator();
 

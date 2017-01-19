@@ -30,7 +30,8 @@ public class LoggedinFilter implements Filter {
 
         //Creation of the path for the redirection. It is either the previous page or the home page
         String address = req.getHeader("referer");
-        if (address == null) {
+        if (address == null || address.contains(req.getRequestURL())) {
+            //If there is no previous page or if it's the same as the current page
             address = req.getContextPath();
         }
 
