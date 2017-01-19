@@ -2,6 +2,7 @@ package com.eword.dao.mongo;
 
 import com.eword.beans.User;
 import com.eword.dao.interfaces.UserDAO;
+import com.eword.lang.Lang.Language;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -34,6 +35,7 @@ public class UserDAOMongo implements UserDAO {
         userDocument.put("user_id", MongoUtilitarian.getNextSequence(MONGO_DATABASE, "user_id"));
         userDocument.put("username", user.getUsername());
         userDocument.put("password", user.getPassword());
+        userDocument.put("language", user.getLanguage().toString());
 
         //The document is inserted in the collection
         userCollection.insertOne(userDocument);
@@ -70,6 +72,7 @@ public class UserDAOMongo implements UserDAO {
             user.setId(userDocument.getInteger("user_id"));
             user.setUsername(username);
             user.setPassword(password);
+            user.setLanguage(Language.getLanguageFromCode(userDocument.getString("language")));
         }
 
         return user;

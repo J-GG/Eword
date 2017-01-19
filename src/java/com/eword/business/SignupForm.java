@@ -3,11 +3,23 @@ package com.eword.business;
 import com.eword.beans.User;
 import com.eword.dao.DAOFactory;
 import com.eword.dao.interfaces.UserDAO;
+import com.eword.lang.Lang.Language;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class SignupForm {
+
+    /**
+     * Name of the session attribute containing the translations
+     */
+    private static final String ATT_LANG = "lang";
+
+    /**
+     * Key of the translation Map to retrieve the code of the language
+     */
+    private final static String KEY_LANG_CODE = "langCode";
 
     /**
      * Name of the field of the form containing the password
@@ -126,6 +138,12 @@ public class SignupForm {
             errors.put(PARAM_PASSWORD, ex.getMessage());
         }
         user.setPassword(sha256(password));
+
+        //The language is set
+        HttpSession session = req.getSession();
+        HashMap<String, String> translations = (HashMap<String, String>) session.getAttribute(ATT_LANG);
+        String lang = translations.get(KEY_LANG_CODE);
+        user.setLanguage(Language.getLanguageFromCode(lang));
 
         //The result message depends on whether there are errors or not
         if (errors.isEmpty()) {

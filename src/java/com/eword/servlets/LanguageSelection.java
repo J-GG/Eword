@@ -1,7 +1,8 @@
 package com.eword.servlets;
 
+import com.eword.lang.Lang;
+import com.eword.lang.Lang.Language;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.ServletException;
@@ -13,11 +14,9 @@ import javax.servlet.http.HttpSession;
 public class LanguageSelection extends HttpServlet {
 
     /**
-     * Name of the request attribute containing the language of the user
+     * Name of the request attribute containing the translations
      */
-    private final static String ATT_LANG = "language";
-
-    private final static String[] LANGUAGES = {"us", "fr"};
+    private final static String ATT_LANG = "lang";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,17 +36,19 @@ public class LanguageSelection extends HttpServlet {
             return;
         }
 
-        //The language is extracted from the URL and inserted into a request attribute
-        String lang = matcher.group(1);
+        //The language code is extracted from the URL and checked if it really exists
+        String langCode = matcher.group(1);
+        Language lang = Language.getLanguageFromCode(langCode);
 
         //If the extracted language doesn't belong to the list, the user is redirected
-        if (!Arrays.asList(LANGUAGES).contains(lang)) {
+        if (lang == null) {
             resp.sendRedirect(address);
             return;
         }
 
+        //The translations of the selected language are stored in a session attribute
         HttpSession session = req.getSession();
-        session.setAttribute(ATT_LANG, lang);
+        session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(lang));
 
         //The user is redirected
         resp.sendRedirect(address);

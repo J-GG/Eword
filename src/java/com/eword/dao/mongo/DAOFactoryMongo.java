@@ -58,12 +58,12 @@ public final class DAOFactoryMongo extends DAOFactory {
     /**
      * Unique instance of the class
      */
-    private static DAOFactoryMongo instance;
+    private static DAOFactoryMongo INSTANCE;
 
     /**
      * Instance of the database
      */
-    private final MongoDatabase database;
+    private static MongoDatabase DATABASE;
 
     /**
      * Creates a connection to the MongoDB database
@@ -79,7 +79,7 @@ public final class DAOFactoryMongo extends DAOFactory {
     private DAOFactoryMongo(String host, int port, String database, String administratorsDatabase, String username, String password) {
         MongoCredential credential = MongoCredential.createCredential(username, administratorsDatabase, password.toCharArray());
         MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
-        this.database = mongoClient.getDatabase(database);
+        this.DATABASE = mongoClient.getDatabase(database);
     }
 
     /**
@@ -114,31 +114,31 @@ public final class DAOFactoryMongo extends DAOFactory {
         }
 
         //If the instance doesn't already exist, it is created
-        if (instance == null) {
-            instance = new DAOFactoryMongo(host, port, database, administratorsDatabase, username, password);
+        if (INSTANCE == null) {
+            INSTANCE = new DAOFactoryMongo(host, port, database, administratorsDatabase, username, password);
         }
 
-        return instance;
+        return INSTANCE;
     }
 
     @Override
     public QuoteDAO getQuoteDAO() {
-        return new QuoteDAOMongo(database);
+        return new QuoteDAOMongo(DATABASE);
     }
 
     @Override
     public UserDAO getUserDAO() {
-        return new UserDAOMongo(database);
+        return new UserDAOMongo(DATABASE);
     }
 
     @Override
     public WordDAO getWordDAO() {
-        return new WordDAOMongo(database);
+        return new WordDAOMongo(DATABASE);
     }
 
     @Override
     public WordlistDAO getWordlistDAO() {
-        return new WordlistDAOMongo(database);
+        return new WordlistDAOMongo(DATABASE);
     }
 
 }

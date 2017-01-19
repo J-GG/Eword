@@ -1,5 +1,8 @@
 package com.eword.beans;
 
+import com.eword.lang.Lang;
+import com.eword.lang.Lang.Language;
+
 public class User {
 
     /**
@@ -10,7 +13,7 @@ public class User {
     /**
      * Language of the user
      */
-    private String language = "us";
+    private Language language = Lang.getDefaultLang();
 
     /**
      * Password of the user
@@ -45,7 +48,7 @@ public class User {
      *
      * @return The language of the user
      */
-    public String getLanguage() {
+    public Language getLanguage() {
         return language;
     }
 
@@ -54,7 +57,7 @@ public class User {
      *
      * @param language The language of the user
      */
-    public void setLanguage(String language) {
+    public void setLanguage(Language language) {
         this.language = language;
     }
 

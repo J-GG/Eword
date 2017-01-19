@@ -16,7 +16,7 @@ public abstract class DAOFactory {
     /**
      * The only instance of the DAOFactory
      */
-    private static DAOFactory instance;
+    private static DAOFactory INSTANCE;
 
     /**
      * Return the instance of the DAOFactory
@@ -26,15 +26,15 @@ public abstract class DAOFactory {
     public static DAOFactory getInstance() {
 
         //If no instance exists, it is created
-        if (instance == null) {
+        if (INSTANCE == null) {
             switch (DAO_FACTORY) {
                 case "mongo":
-                    instance = DAOFactoryMongo.getInstance();
+                    INSTANCE = DAOFactoryMongo.getInstance();
                     break;
             }
         }
 
-        return instance;
+        return INSTANCE;
     }
 
     /**
