@@ -82,7 +82,7 @@
 
                 <div class="row form-group">
                     <div class="col-xs-offset-9 col-xs-1 col-sm-offset-5 col-sm-1">
-                        <button type="submit" class="pull-right btn btn-primary" name="signup_submit">${lang["SIGN_UP_BUTTON"]}</button>
+                        <button type="submit" class="pull-right btn btn-primary" name="signup_submit">${lang["SIGN_UP"]}</button>
                     </div>
                 </div>
 

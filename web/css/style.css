@@ -10,6 +10,7 @@
     font-size: 20px;
     font-weight: bold;
     border: none;
+    text-transform: uppercase;
 }
 
 .navbar-default .navbar-nav > .active > a:hover,
