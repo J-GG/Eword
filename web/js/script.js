@@ -53,7 +53,7 @@ $(document).ready(function() {
     //AJAX request to authenticate the user
     $("#signin_form").submit(function(event)
     {
-        data = {username: $("#navbar_username").val(), password: $("#navbar_password").val()};
+        data = {username: $("#navbar_username").val(), password: $("#navbar_password").val(), remember_me: $("#navbar_remember_me").is(':checked')};
         text = $("#signin_submit").text();
         $("#signin_submit").html("<div class='loading'>&nbsp</div>");
         $("#signin_submit").prop("disabled", true);

@@ -1,27 +1,21 @@
 package com.eword.servlets;
 
 import com.eword.beans.User;
+import com.eword.business.AuthenticationBusiness;
 import com.eword.business.UserBusiness;
-import com.eword.lang.Lang;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class Signin extends HttpServlet {
 
     /**
-     * Name of the session attribute containing the translations
+     * Name of the remember me checkbox
      */
-    private static final String ATT_LANG = "lang";
-
-    /**
-     * Name of the session attribute containing the id of the user
-     */
-    private static final String ATT_USER_ID = "user_id";
+    private static final String PARAM_REMEMBER_ME = "remember_me";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,9 +27,9 @@ public class Signin extends HttpServlet {
 
         //If the user exists, we set information as session attributes
         if (authenticate) {
-            HttpSession session = req.getSession();
-            session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(user.getLanguage()));
-            session.setAttribute(ATT_USER_ID, user.getId());
+            boolean rememberMeChecked = Boolean.valueOf(req.getParameter(PARAM_REMEMBER_ME));
+            AuthenticationBusiness.authenticatedUser(user, rememberMeChecked, req, resp);
+
             message = "\"You successfully logged in !\"";
         }
 

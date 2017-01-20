@@ -22,7 +22,7 @@ public class UserBusiness {
     public static User getUser(HttpServletRequest req) {
         //We retrieve the parameters of the request to identify the user
         String username = req.getParameter("username");
-        String password = SignupForm.sha256(req.getParameter("password"));
+        String password = StringUtils.sha256(req.getParameter("password"));
 
         User user = USER_DAO.find(username, password);
 

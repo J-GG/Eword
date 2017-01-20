@@ -12,6 +12,10 @@
         <filter-name>LoggedinFilter</filter-name>
         <filter-class>com.eword.filters.LoggedinFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>RememberMeFilter</filter-name>
+        <filter-class>com.eword.filters.RememberMeFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>NavbarFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -53,7 +57,7 @@
         <servlet-class>com.eword.servlets.LanguageSelection</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Authenticate</servlet-name>
+        <servlet-name>Signin</servlet-name>
         <servlet-class>com.eword.servlets.Signin</servlet-class>
     </servlet>
     <servlet>
@@ -85,7 +89,7 @@
         <url-pattern>/lang/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Authenticate</servlet-name>
+        <servlet-name>Signin</servlet-name>
         <url-pattern>/authenticate</url-pattern>
     </servlet-mapping>
     <servlet-mapping>

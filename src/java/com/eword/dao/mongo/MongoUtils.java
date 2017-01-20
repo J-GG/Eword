@@ -4,7 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoUtilitarian implements RequestAttribute {
+public class MongoUtils implements RequestAttribute {
 
     /**
      * Generate an auto-incrementing number for the defined counter

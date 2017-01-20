@@ -5,6 +5,14 @@ import com.eword.beans.User;
 public interface UserDAO {
 
     /**
+     * Find a user's id from their token
+     *
+     * @param token The user's token
+     * @return A User if a user with this token could be found. Null otherwise
+     */
+    Integer findIdFromToken(String token);
+
+    /**
      * Add a User
      *
      * @param user The User to add
@@ -28,4 +36,19 @@ public interface UserDAO {
      * otherwise
      */
     User find(String username, String password);
+
+    /**
+     * Find a User from their id
+     *
+     * @param userId The user's id
+     * @return A User if a user with this id could be found. Null otherwise
+     */
+    User find(Integer userId);
+
+    /**
+     * Update the token value of the user
+     *
+     * @param user The user to be updated
+     */
+    void updateToken(User user);
 }

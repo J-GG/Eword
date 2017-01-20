@@ -58,6 +58,11 @@ public interface RequestAttribute {
     static final String COLLECTION_USER_PASSWORD = "password";
 
     /**
+     * Name of the counter collection
+     */
+    static final String COLLECTION_USER_TOKEN = "token";
+
+    /**
      * Name of the field containing the user's username
      */
     static final String COLLECTION_USER_USERNAME = "username";

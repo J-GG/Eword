@@ -4,7 +4,6 @@ import com.eword.beans.User;
 import com.eword.dao.DAOFactory;
 import com.eword.dao.interfaces.UserDAO;
 import com.eword.lang.Lang.Language;
-import java.security.MessageDigest;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,33 +44,6 @@ public class SignupForm {
      * Message to display after the validation of the form
      */
     private String result;
-
-    /**
-     * Return the encryption of the password with SHA-256
-     *
-     * @param password The password to encrypt
-     * @return The encrypted password
-     */
-    public static String sha256(String password) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(password.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
-
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 
     /**
      * Return the map of errors
@@ -137,7 +109,7 @@ public class SignupForm {
         } catch (Exception ex) {
             errors.put(PARAM_PASSWORD, ex.getMessage());
         }
-        user.setPassword(sha256(password));
+        user.setPassword(StringUtils.sha256(password));
 
         //The language is set
         HttpSession session = req.getSession();
