@@ -7,25 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import java.util.concurrent.ThreadLocalRandom;
 import org.bson.Document;
 
-public class QuoteDAOMongo implements QuoteDAO {
-
-    /**
-     * Name of the quote collection
-     */
-    private static final String COLLECTION_QUOTE = "quote";
-    /**
-     * Name of the field containing the author of the quote
-     */
-    private static final String COLLECTION_QUOTE_AUTHOR = "author";
-
-    /**
-     * Name of the field containing the content of the quote
-     */
-    private static final String COLLECTION_QUOTE_CONTENT = "content";
-    /**
-     * Name of the field containing the quote id
-     */
-    private static final String COLLECTION_QUOTE_ID = "quote_id";
+public class QuoteDAOMongo implements QuoteDAO, RequestAttribute {
 
     /**
      * Interface to access the MongoDB database

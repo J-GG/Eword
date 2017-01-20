@@ -31,27 +31,29 @@ public final class DAOFactoryMongo extends DAOFactory {
     private static final String PROPERTY_ADMINISTRATORS_DATABASE = "administrators_database";
 
     /**
-     * Key to retrieve the name of the database
+     * Key to retrieve the name of the database from the properties file
      */
     private static final String PROPERTY_DATABASE = "database";
 
     /**
-     * Key to retrieve the host
+     * Key to retrieve the host from the properties file
      */
     private static final String PROPERTY_HOST = "host";
 
     /**
      * Key to retrieve the password to be granted the access to the database
+     * from the properties file
      */
     private static final String PROPERTY_PASSWORD = "password";
 
     /**
-     * Key to retrieve the port
+     * Key to retrieve the port from the properties file
      */
     private static final String PROPERTY_PORT = "port";
 
     /**
      * Key to retrieve the username to be granted the access to the database
+     * from the properties file
      */
     private static final String PROPERTY_USERNAME = "username";
 
@@ -79,7 +81,7 @@ public final class DAOFactoryMongo extends DAOFactory {
     private DAOFactoryMongo(String host, int port, String database, String administratorsDatabase, String username, String password) {
         MongoCredential credential = MongoCredential.createCredential(username, administratorsDatabase, password.toCharArray());
         MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), Arrays.asList(credential));
-        this.DATABASE = mongoClient.getDatabase(database);
+        DATABASE = mongoClient.getDatabase(database);
     }
 
     /**

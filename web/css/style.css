@@ -204,6 +204,11 @@ h2
 
 /** Forms **/
 
+#signin_form
+{
+    text-transform: none;
+}
+
 #signin_form .checkbox label
 {
     padding-left: 20px;

@@ -4,12 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoUtilitarian {
-
-    /**
-     * Name of the counter collection
-     */
-    private static final String COLLECTION_COUNTER = "counter";
+public class MongoUtilitarian implements RequestAttribute {
 
     /**
      * Generate an auto-incrementing number for the defined counter
@@ -24,13 +19,13 @@ public class MongoUtilitarian {
 
         //We search for the counterName
         Document find = new Document();
-        find.put("_id", counterName);
+        find.put(COLLECTION_COUNTER_NAME, counterName);
         //We increment the counter by 1
         Document update = new Document();
-        update.put("$inc", new Document("seq", 1));
+        update.put("$inc", new Document(COLLECTION_COUNTER_SEQUENCE, 1));
         //We get the previous value of the counter which is then updated
         Document obj = (Document) collection.findOneAndUpdate(find, update);
 
-        return obj.getInteger("seq");
+        return obj.getInteger(COLLECTION_COUNTER_SEQUENCE);
     }
 }

@@ -9,37 +9,7 @@ import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import org.bson.Document;
 
-public class WordlistDAOMongo implements WordlistDAO {
-
-    /**
-     * Name of the wordlist collection
-     */
-    private static final String COLLECTION_WORDLIST = "wordlist";
-
-    /**
-     * Name of the field containing the destination language of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_DESTINATION = "destination";
-
-    /**
-     * Name of the field containing the id of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_ID = "wordlist_id";
-
-    /**
-     * Name of the field containing the source language of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_SOURCE = "source";
-
-    /**
-     * Name of the field containing the title of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_TITLE = "title";
-
-    /**
-     * Name of the field containing the owner of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_USER = "user";
+public class WordlistDAOMongo implements WordlistDAO, RequestAttribute {
 
     /**
      * Interface to access the MongoDB database

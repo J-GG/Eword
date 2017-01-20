@@ -9,31 +9,7 @@ import com.mongodb.client.model.Filters;
 import static com.mongodb.client.model.Filters.and;
 import org.bson.Document;
 
-public class UserDAOMongo implements UserDAO {
-
-    /**
-     * Name of the counter collection
-     */
-    private static final String COLLECTION_USER = "user";
-
-    /**
-     * Name of the field containing the user's id
-     */
-    private static final String COLLECTION_USER_ID = "user_id";
-
-    /**
-     * Name of the field containing the user's language
-     */
-    private static final String COLLECTION_USER_LANGUAGE = "language";
-    /**
-     * Name of the field containing the user's password
-     */
-    private static final String COLLECTION_USER_PASSWORD = "password";
-
-    /**
-     * Name of the field containing the user's username
-     */
-    private static final String COLLECTION_USER_USERNAME = "username";
+public class UserDAOMongo implements UserDAO, RequestAttribute {
 
     /**
      * Interface to access the MongoDB database

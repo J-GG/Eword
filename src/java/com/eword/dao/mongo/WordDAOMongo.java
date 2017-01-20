@@ -8,47 +8,7 @@ import com.mongodb.client.model.Filters;
 import java.util.ArrayList;
 import org.bson.Document;
 
-public class WordDAOMongo implements WordDAO {
-
-    /**
-     * Name of the wordlist collection
-     */
-    private static final String COLLECTION_WORDLIST = "wordlist";
-
-    /**
-     * Name of the field containing the id of the wordlist
-     */
-    private static final String COLLECTION_WORDLIST_ID = "wordlist_id";
-
-    /**
-     * Name of the field containing the list of words
-     */
-    private static final String COLLECTION_WORDLIST_WORDS = "words";
-
-    /**
-     * Name of the field containing the example of the word
-     */
-    private static final String COLLECTION_WORD_EXAMPLE = "example";
-
-    /**
-     * Name of the field containing the id of the word
-     */
-    private static final String COLLECTION_WORD_ID = "word_id";
-
-    /**
-     * Name of the field containing the part of speech of the word
-     */
-    private static final String COLLECTION_WORD_PART_OF_SPEECH = "partOfSpeech";
-
-    /**
-     * Name of the field containing the translation of the word
-     */
-    private static final String COLLECTION_WORD_TRANSLATION = "translation";
-
-    /**
-     * Name of the field containing the value of the word
-     */
-    private static final String COLLECTION_WORD_WORD = "word";
+public class WordDAOMongo implements WordDAO, RequestAttribute {
 
     /**
      * Interface to access the MongoDB database
