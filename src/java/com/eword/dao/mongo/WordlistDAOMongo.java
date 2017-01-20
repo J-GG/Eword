@@ -12,6 +12,36 @@ import org.bson.Document;
 public class WordlistDAOMongo implements WordlistDAO {
 
     /**
+     * Name of the wordlist collection
+     */
+    private static final String COLLECTION_WORDLIST = "wordlist";
+
+    /**
+     * Name of the field containing the destination language of the wordlist
+     */
+    private static final String COLLECTION_WORDLIST_DESTINATION = "destination";
+
+    /**
+     * Name of the field containing the id of the wordlist
+     */
+    private static final String COLLECTION_WORDLIST_ID = "wordlist_id";
+
+    /**
+     * Name of the field containing the source language of the wordlist
+     */
+    private static final String COLLECTION_WORDLIST_SOURCE = "source";
+
+    /**
+     * Name of the field containing the title of the wordlist
+     */
+    private static final String COLLECTION_WORDLIST_TITLE = "title";
+
+    /**
+     * Name of the field containing the owner of the wordlist
+     */
+    private static final String COLLECTION_WORDLIST_USER = "user";
+
+    /**
      * Interface to access the MongoDB database
      */
     private final MongoDatabase MONGO_DATABASE;
@@ -29,19 +59,19 @@ public class WordlistDAOMongo implements WordlistDAO {
     public Wordlist find(int wordlistId) {
 
         Wordlist wordlist = null;
-        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
+        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection(COLLECTION_WORDLIST);
 
         //We search for the wordlist with the given id
-        Document wordlistDocument = (Document) wordlistCollection.find(Filters.eq("wordlist_id", wordlistId)).first();
+        Document wordlistDocument = (Document) wordlistCollection.find(Filters.eq(COLLECTION_WORDLIST_ID, wordlistId)).first();
 
         //If the document exists, a Wordlist object is created and populated with their information
         if (wordlistDocument != null) {
             wordlist = new Wordlist();
-            wordlist.setId(wordlistDocument.getInteger("wordlist_id"));
-            wordlist.setUserId(wordlistDocument.getInteger("user"));
-            wordlist.setTitle(wordlistDocument.getString("title"));
-            wordlist.setSourceLanguage(wordlistDocument.getString("source"));
-            wordlist.setDestinationLanguage(wordlistDocument.getString("destination"));
+            wordlist.setId(wordlistDocument.getInteger(COLLECTION_WORDLIST_ID));
+            wordlist.setUserId(wordlistDocument.getInteger(COLLECTION_WORDLIST_USER));
+            wordlist.setTitle(wordlistDocument.getString(COLLECTION_WORDLIST_TITLE));
+            wordlist.setSourceLanguage(wordlistDocument.getString(COLLECTION_WORDLIST_SOURCE));
+            wordlist.setDestinationLanguage(wordlistDocument.getString(COLLECTION_WORDLIST_DESTINATION));
         }
 
         return wordlist;
@@ -51,20 +81,20 @@ public class WordlistDAOMongo implements WordlistDAO {
     public ArrayList<Wordlist> findAll(int userId) {
 
         ArrayList<Wordlist> wordlists = new ArrayList<>();
-        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection("wordlist");
+        MongoCollection wordlistCollection = MONGO_DATABASE.getCollection(COLLECTION_WORDLIST);
 
         //We search for all the wordlists
-        MongoCursor cursor = wordlistCollection.find(Filters.eq("user", userId)).iterator();
+        MongoCursor cursor = wordlistCollection.find(Filters.eq(COLLECTION_WORDLIST_USER, userId)).iterator();
 
         //For each document, a Wordlist object is created with its information and added to the list
         while (cursor.hasNext()) {
             Document wordlistDocument = (Document) cursor.next();
             Wordlist wordlist = new Wordlist();
-            wordlist.setId(wordlistDocument.getInteger("wordlist_id"));
-            wordlist.setUserId(wordlistDocument.getInteger("user"));
-            wordlist.setTitle(wordlistDocument.getString("title"));
-            wordlist.setSourceLanguage(wordlistDocument.getString("source"));
-            wordlist.setDestinationLanguage(wordlistDocument.getString("destination"));
+            wordlist.setId(wordlistDocument.getInteger(COLLECTION_WORDLIST_ID));
+            wordlist.setUserId(wordlistDocument.getInteger(COLLECTION_WORDLIST_USER));
+            wordlist.setTitle(wordlistDocument.getString(COLLECTION_WORDLIST_TITLE));
+            wordlist.setSourceLanguage(wordlistDocument.getString(COLLECTION_WORDLIST_SOURCE));
+            wordlist.setDestinationLanguage(wordlistDocument.getString(COLLECTION_WORDLIST_DESTINATION));
             wordlists.add(wordlist);
         }
 

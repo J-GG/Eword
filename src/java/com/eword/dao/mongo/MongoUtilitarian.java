@@ -7,15 +7,20 @@ import org.bson.Document;
 public class MongoUtilitarian {
 
     /**
+     * Name of the counter collection
+     */
+    private static final String COLLECTION_COUNTER = "counter";
+
+    /**
      * Generate an auto-incrementing number for the defined counter
      *
-     * @param mongoDatabase The database where data is stored
+     * @param MONGO_DATABASE The database where data is stored
      * @param counterName the counter name
      * @return the value of the counter
      */
     public static Integer getNextSequence(final MongoDatabase MONGO_DATABASE, String counterName) {
 
-        MongoCollection collection = MONGO_DATABASE.getCollection("counter");
+        MongoCollection collection = MONGO_DATABASE.getCollection(COLLECTION_COUNTER);
 
         //We search for the counterName
         Document find = new Document();
