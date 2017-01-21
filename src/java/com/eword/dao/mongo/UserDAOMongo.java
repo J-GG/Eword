@@ -60,14 +60,13 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
     @Override
     public User find(String username, String password) {
 
-        User user;
         MongoCollection userCollection = MONGO_DATABASE.getCollection(COLLECTION_USER);
 
         //We search for a document in the collection from the username and the password
         Document userDocument = (Document) userCollection.find(and(Filters.eq(COLLECTION_USER_USERNAME, username), Filters.eq(COLLECTION_USER_PASSWORD, password))).first();
 
         //If the document exists, a User object is created and populated with their information
-        user = populateUser(userDocument);
+        User user = populateUser(userDocument);
 
         return user;
     }
@@ -75,33 +74,29 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
     @Override
     public User find(Integer userId) {
 
-        User user;
         MongoCollection userCollection = MONGO_DATABASE.getCollection(COLLECTION_USER);
 
         //We search for a document in the collection from the user's id
         Document userDocument = (Document) userCollection.find(Filters.eq(COLLECTION_USER_ID, userId)).first();
 
         //If the document exists, a User object is created and populated with their information
-        user = populateUser(userDocument);
+        User user = populateUser(userDocument);
 
         return user;
     }
 
     @Override
-    public Integer findIdFromToken(String token) {
+    public User findIdFromToken(String token) {
 
-        Integer userId = null;
         MongoCollection userCollection = MONGO_DATABASE.getCollection(COLLECTION_USER);
 
-        //We search for a document in the collection from token
+        //We search for a document in the collection from the token
         Document userDocument = (Document) userCollection.find(Filters.eq(COLLECTION_USER_TOKEN, token)).first();
 
-        //If the document exists, We retrieve the user id
-        if (userDocument != null) {
-            userId = userDocument.getInteger(COLLECTION_USER_ID);
-        }
+        //If the document exists, We retrieve the user
+        User user = populateUser(userDocument);
 
-        return userId;
+        return user;
     }
 
     /**
@@ -113,9 +108,9 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
      */
     private User populateUser(Document userDocument) {
 
-        User user = new User();
-
+        User user = null;
         if (userDocument != null) {
+            user = new User();
             user.setId(userDocument.getInteger(COLLECTION_USER_ID));
             user.setUsername(userDocument.getString(COLLECTION_USER_PASSWORD));
             user.setPassword(userDocument.getString(COLLECTION_USER_PASSWORD));
@@ -127,8 +122,7 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
     }
 
     @Override
-    public void updateToken(User user
-    ) {
+    public void updateToken(User user) {
 
         MongoCollection userCollection = MONGO_DATABASE.getCollection(COLLECTION_USER);
 

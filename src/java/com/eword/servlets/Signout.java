@@ -35,10 +35,12 @@ public class Signout extends HttpServlet {
         //The cookies are destroyed
         Cookie cookieId = new Cookie(COOKIE_ID_NAME, null);
         cookieId.setMaxAge(COOKIE_MAX_AGE);
+        cookieId.setPath(req.getContextPath());
         resp.addCookie(cookieId);
 
         Cookie cookieToken = new Cookie(COOKIE_TOKEN_NAME, null);
         cookieToken.setMaxAge(COOKIE_MAX_AGE);
+        cookieToken.setPath(req.getContextPath());
         resp.addCookie(cookieToken);
 
         //The user is redirected to the last page visited or to the home page

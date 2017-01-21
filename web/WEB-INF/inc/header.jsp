@@ -52,13 +52,13 @@
                                                            data-fv-notempty="true"
                                                            data-fv-notempty-message="The password is required">
                                                 </div>
-                                                <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary btn-block" name="signin_submit" id="signin_submit" >${lang["SIGN_IN"]}</button>
-                                                </div>
                                                 <div class="checkbox">
                                                     <label>
                                                         <input type="checkbox" name="signin_remember_me" id="navbar_remember_me"> ${lang["REMEMBER_ME"]}
                                                     </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary btn-block" name="signin_submit" id="signin_submit" >${lang["SIGN_IN"]}</button>
                                                 </div>
                                                 <div class="text-center" id="signin_feedback"></div>
                                             </form>

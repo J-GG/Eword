@@ -56,18 +56,18 @@ public class AuthenticationBusiness {
         //Information about the user are set
         session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(user.getLanguage()));
         session.setAttribute(ATT_USER_ID, user.getId());
-
         if (rememberMe) {
             //The user id is hashed and stored in a cookie
             String hashedId = StringUtils.sha256(String.valueOf(user.getId()));
             Cookie cookieId = new Cookie(COOKIE_ID_NAME, hashedId);
-            cookieId.setMaxAge(COOKIE_MAX_AGE);
+            cookieId.setPath(req.getContextPath());
             resp.addCookie(cookieId);
 
             //A random token is generated
             String token = StringUtils.randomString(32);
             Cookie cookieToken = new Cookie(COOKIE_TOKEN_NAME, token);
             cookieToken.setMaxAge(COOKIE_MAX_AGE);
+            cookieToken.setPath(req.getContextPath());
             resp.addCookie(cookieToken);
 
             //The user's token is updated
@@ -89,11 +89,11 @@ public class AuthenticationBusiness {
         String hashedToken = StringUtils.sha256(token);
 
         //We search for a user from the token
-        Integer userId = USER_DAO.findIdFromToken(hashedToken);
+        User userToken = USER_DAO.findIdFromToken(hashedToken);
 
-        //If both ids match, the retrieve the User
-        if (userId != null && hashedId.equals(StringUtils.sha256(String.valueOf(userId)))) {
-            user = USER_DAO.find(userId);
+        //If both ids match, the User is returned
+        if (userToken != null && hashedId.equals(StringUtils.sha256(String.valueOf(userToken.getId())))) {
+            user = userToken;
         }
 
         return user;

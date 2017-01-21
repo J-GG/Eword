@@ -45,7 +45,7 @@ public class StringUtils {
         Random random = new Random();
 
         //Characters which can be used to generate the string
-        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~`!@#$%^&*()-_=+[{]}\\|;:\'\",<.>/?".toCharArray();
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 
         for (int i = 0; i <= length; i++) {
             char c = chars[random.nextInt(chars.length)];

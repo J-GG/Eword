@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RememberMeFilter implements Filter {
 
@@ -24,19 +25,11 @@ public class RememberMeFilter implements Filter {
      * Name of the cookie storing the id
      */
     private static final String COOKIE_ID_NAME = "id";
-    /**
-     * Name of the session attribute containing the translations
-     */
-    private static final String ATT_LANG = "lang";
 
     /**
      * Name of the session attribute containing the id of the user
      */
     private static final String ATT_USER_ID = "user_id";
-    /**
-     * Max age of the cookie set to 1 year
-     */
-    private static final int COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
     @Override
     public void destroy() {
@@ -48,29 +41,34 @@ public class RememberMeFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        String hashedId = null;
-        String token = null;
+        //We try to log in the user only if it has not been logged in yet
+        HttpSession session = req.getSession();
+        if (session.getAttribute(ATT_USER_ID) == null) {
+            String hashedId = null;
+            String token = null;
 
-        //We retrieve the cookies we are interested in
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie != null) {
-                    if (COOKIE_ID_NAME.equals(cookie.getName())) {
-                        hashedId = cookie.getValue();
-                    } else if (COOKIE_TOKEN_NAME.equals(cookie.getName())) {
-                        token = cookie.getValue();
+            //We retrieve the cookies we are interested in
+            Cookie[] cookies = req.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie != null) {
+                        if (COOKIE_ID_NAME.equals(cookie.getName())) {
+                            hashedId = cookie.getValue();
+                        } else if (COOKIE_TOKEN_NAME.equals(cookie.getName())) {
+                            token = cookie.getValue();
+                        }
                     }
                 }
             }
-        }
 
-        //We check if the information of the cookie matches a user
-        User user = AuthenticationBusiness.checkRememberMe(hashedId, token);
-        if (user != null) {
-            AuthenticationBusiness.authenticatedUser(user, true, req, res);
+            if (hashedId != null && token != null) {
+                //We check if the information of the cookie matches a user. If it is the case, the user is authenticated
+                User user = AuthenticationBusiness.checkRememberMe(hashedId, token);
+                if (user != null) {
+                    AuthenticationBusiness.authenticatedUser(user, true, req, res);
+                }
+            }
         }
-
         chain.doFilter(req, res);
     }
 

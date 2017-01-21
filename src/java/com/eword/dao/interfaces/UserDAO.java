@@ -5,12 +5,12 @@ import com.eword.beans.User;
 public interface UserDAO {
 
     /**
-     * Find a user's id from their token
+     * Find a user from their token
      *
      * @param token The user's token
      * @return A User if a user with this token could be found. Null otherwise
      */
-    Integer findIdFromToken(String token);
+    User findIdFromToken(String token);
 
     /**
      * Add a User
