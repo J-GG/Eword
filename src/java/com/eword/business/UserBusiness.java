@@ -19,7 +19,7 @@ public class UserBusiness {
      * @param req The request
      * @return The User if they exist. Null otherwise
      */
-    public static User getUser(HttpServletRequest req) {
+    public static User getUserFromLogin(HttpServletRequest req) {
         //We retrieve the parameters of the request to identify the user
         String username = req.getParameter("username");
         String password = StringUtils.sha256(req.getParameter("password"));
@@ -27,5 +27,27 @@ public class UserBusiness {
         User user = USER_DAO.find(username, password);
 
         return user;
+    }
+
+    /**
+     * Return the User corresponding to the id
+     *
+     * @param userId The user's id
+     * @return The User if they exist. Null otherwise
+     */
+    public static User getUserFromId(Integer userId) {
+
+        User user = USER_DAO.find(userId);
+
+        return user;
+    }
+
+    /**
+     * Update the User in the data layer
+     *
+     * @param user The User to be updated
+     */
+    public static void updateUser(User user) {
+        USER_DAO.update(user);
     }
 }

@@ -1,5 +1,7 @@
 package com.eword.servlets;
 
+import com.eword.beans.User;
+import com.eword.business.UserBusiness;
 import com.eword.lang.Lang;
 import com.eword.lang.Lang.Language;
 import java.io.IOException;
@@ -17,6 +19,11 @@ public class LanguageSelection extends HttpServlet {
      * Name of the request attribute containing the translations
      */
     private final static String ATT_LANG = "lang";
+
+    /**
+     * Name of the session attribute containing the id of the user
+     */
+    private static final String ATT_USER_ID = "user_id";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -49,6 +56,14 @@ public class LanguageSelection extends HttpServlet {
         //The translations of the selected language are stored in a session attribute
         HttpSession session = req.getSession();
         session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(lang));
+
+        //If the user is logged in, we update their language
+        Integer userId = (Integer) session.getAttribute(ATT_USER_ID);
+        if (userId != null) {
+            User user = UserBusiness.getUserFromId(userId);
+            user.setLanguage(lang);
+            UserBusiness.updateUser(user);
+        }
 
         //The user is redirected
         resp.sendRedirect(address);

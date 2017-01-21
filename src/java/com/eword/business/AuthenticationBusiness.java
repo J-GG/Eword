@@ -72,7 +72,7 @@ public class AuthenticationBusiness {
 
             //The user's token is updated
             user.setToken(StringUtils.sha256(token));
-            USER_DAO.updateToken(user);
+            USER_DAO.update(user);
         }
     }
 

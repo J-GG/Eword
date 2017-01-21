@@ -21,7 +21,7 @@ public class Signin extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //We verify that the user exists
-        User user = UserBusiness.getUser(req);
+        User user = UserBusiness.getUserFromLogin(req);
         boolean authenticate = (user != null);
         String message = "\"This user doesn't exist\"";
 

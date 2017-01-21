@@ -46,9 +46,9 @@ public interface UserDAO {
     User find(Integer userId);
 
     /**
-     * Update the token value of the user
+     * Update the User
      *
      * @param user The user to be updated
      */
-    void updateToken(User user);
+    void update(User user);
 }

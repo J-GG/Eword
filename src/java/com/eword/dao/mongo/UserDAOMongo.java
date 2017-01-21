@@ -112,7 +112,7 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
         if (userDocument != null) {
             user = new User();
             user.setId(userDocument.getInteger(COLLECTION_USER_ID));
-            user.setUsername(userDocument.getString(COLLECTION_USER_PASSWORD));
+            user.setUsername(userDocument.getString(COLLECTION_USER_USERNAME));
             user.setPassword(userDocument.getString(COLLECTION_USER_PASSWORD));
             user.setLanguage(Language.getLanguageFromCode(userDocument.getString(COLLECTION_USER_LANGUAGE)));
             user.setToken(userDocument.getString(COLLECTION_USER_TOKEN));
@@ -122,7 +122,7 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
     }
 
     @Override
-    public void updateToken(User user) {
+    public void update(User user) {
 
         MongoCollection userCollection = MONGO_DATABASE.getCollection(COLLECTION_USER);
 
@@ -132,9 +132,15 @@ public class UserDAOMongo implements UserDAO, RequestAttribute {
 
         //Update of the document
         Document update = new Document();
-        update.put("$set", new Document(COLLECTION_USER_TOKEN, user.getToken()));
+        update.append(COLLECTION_USER_USERNAME, user.getUsername());
+        update.append(COLLECTION_USER_PASSWORD, user.getPassword());
+        update.append(COLLECTION_USER_LANGUAGE, user.getLanguage().toString());
+        update.append(COLLECTION_USER_TOKEN, user.getToken());
 
-        userCollection.updateOne(search, update);
+        Document set = new Document();
+        set.append("$set", update);
+
+        userCollection.updateOne(search, set);
     }
 
 }
