@@ -1,5 +1,14 @@
 package com.eword.beans;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Word {
 
     /**
@@ -10,11 +19,14 @@ public class Word {
     /**
      * Id of the Word
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**
      * Part of speech of the Word
      */
+    @Column(name = "part_of_speech")
     private String partOfSpeech;
 
     /**
@@ -26,6 +38,12 @@ public class Word {
      * Word
      */
     private String word;
+
+    /**
+     * Wordlist to which this Word belongs
+     */
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Wordlist wordlist;
 
     /**
      * Return the examples of the word
@@ -115,5 +133,23 @@ public class Word {
      */
     public void setWord(String word) {
         this.word = word;
+    }
+
+    /**
+     * Return the Wordlist to which this Word belongs
+     *
+     * @return The Wordlist
+     */
+    public Wordlist getWordlist() {
+        return wordlist;
+    }
+
+    /**
+     * Set the Wordlist to which this Word belongs
+     *
+     * @param wordlist the Wordlist
+     */
+    public void setWordlist(Wordlist wordlist) {
+        this.wordlist = wordlist;
     }
 }

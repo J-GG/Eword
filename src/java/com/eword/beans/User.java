@@ -2,12 +2,21 @@ package com.eword.beans;
 
 import com.eword.lang.Lang;
 import com.eword.lang.Lang.Language;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "users")
 public class User {
 
     /**
      * The user's id
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**

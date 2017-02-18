@@ -1,22 +1,35 @@
 package com.eword.beans;
 
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Wordlist {
 
     /**
      * Destination language of the wordlist
      */
+    @Column(name = "destination_language")
     private String destinationLanguage;
 
     /**
      * If of the wordlist
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**
      * Source language of the wordlist
      */
+    @Column(name = "source_language")
     private String sourceLanguage;
 
     /**
@@ -25,13 +38,16 @@ public class Wordlist {
     private String title;
 
     /**
-     * The owner's id
+     * The owner of the wordlist
      */
-    private Integer userId;
+    @ManyToOne
+    private User user;
+
     /**
      * List of words
      */
-    private ArrayList<Word> words;
+    @OneToMany(mappedBy = "wordlist", cascade = CascadeType.ALL)
+    private List<Word> words;
 
     /**
      * Appends the Word to the end of the list
@@ -115,21 +131,21 @@ public class Wordlist {
     }
 
     /**
-     * Return the owner's id
+     * Return the owner of the wordlist
      *
-     * @return The owner's id
+     * @return the owner of the wordlist
      */
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Set the owner's id
+     * Set the owner of the wordlist
      *
-     * @param userId The owner's id
+     * @param user The owner of the wordlist
      */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
@@ -137,7 +153,7 @@ public class Wordlist {
      *
      * @return The list of Word of the wordlist
      */
-    public ArrayList<Word> getWords() {
+    public List<Word> getWords() {
         return words;
     }
 
@@ -146,7 +162,7 @@ public class Wordlist {
      *
      * @param words The list of Word of the wordlist
      */
-    public void setWords(ArrayList<Word> words) {
+    public void setWords(List<Word> words) {
         this.words = words;
     }
 
