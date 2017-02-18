@@ -65,9 +65,10 @@ public class RememberMeFilter implements Filter {
 
             if (hashedId != null && token != null) {
                 //We check if the information of the cookie matches a user. If it is the case, the user is authenticated
-                User user = AuthenticationBusiness.checkRememberMe(hashedId, token);
+                AuthenticationBusiness authenticationBusiness = new AuthenticationBusiness();
+                User user = authenticationBusiness.checkRememberMe(hashedId, token);
                 if (user != null) {
-                    AuthenticationBusiness.authenticatedUser(user, true, req, res);
+                    authenticationBusiness.authenticatedUser(user, true, req, res);
                 }
             }
         }

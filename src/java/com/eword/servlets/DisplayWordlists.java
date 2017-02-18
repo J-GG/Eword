@@ -28,7 +28,8 @@ public class DisplayWordlists extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //a Map of Wordlist objects sorted by languages is retrieved and set into a request attribute
-        Map<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages = WordlistBusiness.mapByLanguages(req);
+        WordlistBusiness wordlistBusiness = new WordlistBusiness();
+        Map<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages = wordlistBusiness.mapByLanguages(req);
         req.setAttribute(ATT_MAP_BY_LANGUAGES, mapByLanguages);
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);

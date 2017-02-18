@@ -62,9 +62,10 @@ public class LanguageSelection extends HttpServlet {
         //If the user is logged in, we update their language
         Integer userId = (Integer) session.getAttribute(ATT_USER_ID);
         if (userId != null) {
-            User user = UserBusiness.getUserFromId(userId);
+            UserBusiness userBusiness = new UserBusiness();
+            User user = userBusiness.getUserFromId(userId);
             user.setLanguage(lang);
-            UserBusiness.updateUser(user);
+            userBusiness.updateUser(user);
         }
 
         //The user is redirected

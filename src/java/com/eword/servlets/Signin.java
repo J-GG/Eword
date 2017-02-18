@@ -23,14 +23,16 @@ public class Signin extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //We verify that the user exists
-        User user = UserBusiness.getUserFromLogin(req);
+        UserBusiness userBusiness = new UserBusiness();
+        User user = userBusiness.getUserFromLogin(req);
         boolean authenticate = (user != null);
         String message = "\"This user doesn't exist\"";
 
         //If the user exists, we set information as session attributes
         if (authenticate) {
             boolean rememberMeChecked = Boolean.valueOf(req.getParameter(PARAM_REMEMBER_ME));
-            AuthenticationBusiness.authenticatedUser(user, rememberMeChecked, req, resp);
+            AuthenticationBusiness authenticationBusiness = new AuthenticationBusiness();
+            authenticationBusiness.authenticatedUser(user, rememberMeChecked, req, resp);
 
             message = "\"You successfully logged in !\"";
         }

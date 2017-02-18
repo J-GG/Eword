@@ -21,7 +21,7 @@ public class WordlistDAO {
      * @return The wordlist associated with the id or null if the id doesn't
      * correpond to any wordlist
      */
-    Wordlist find(int wordlistId) {
+    public Wordlist find(int wordlistId) {
         Wordlist wordlist;
         wordlist = em.find(Wordlist.class, wordlistId);
 
@@ -35,7 +35,7 @@ public class WordlistDAO {
      * @param userId The user's id
      * @return The user's list of wordlist
      */
-    List<Wordlist> findAll(int userId) {
+    public List<Wordlist> findAll(int userId) {
         List<Wordlist> list = null;
 
         Query requete = em.createNamedQuery("SELECT w FROM Wordlist w");

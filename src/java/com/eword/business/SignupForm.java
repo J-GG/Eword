@@ -1,10 +1,10 @@
 package com.eword.business;
 
 import com.eword.beans.User;
-import com.eword.dao.DAOFactory;
-import com.eword.dao.interfaces.UserDAO;
+import com.eword.dao.UserDAO;
 import com.eword.lang.Lang.Language;
 import java.util.HashMap;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,7 +33,8 @@ public class SignupForm {
     /**
      * Object enabling to communicate with the User data layer
      */
-    private static final UserDAO USER_DAO = DAOFactory.getInstance().getUserDAO();
+    @EJB
+    private UserDAO userDAO;
 
     /**
      * Map of all the input errors
@@ -120,7 +121,7 @@ public class SignupForm {
         //The result message depends on whether there are errors or not
         if (errors.isEmpty()) {
             //The user is added to the data
-            USER_DAO.create(user);
+            userDAO.create(user);
 
             result = "You successfully registered ! We're pleased that you have chosen to become part of the community.<br />\n"
                     + "            <ul>\n"
@@ -145,7 +146,7 @@ public class SignupForm {
                 throw new Exception("The username must be more than 4 and less than 30 characters long");
             } else if (!username.matches("^[a-zA-Z0-9_\\.]+$")) {
                 throw new Exception("The username can only consist of alphabetical, number, dot and underscore");
-            } else if (USER_DAO.exist(username)) {
+            } else if (userDAO.exist(username)) {
                 throw new Exception("The username already exists");
             }
         } else {

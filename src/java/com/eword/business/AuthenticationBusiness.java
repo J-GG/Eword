@@ -1,9 +1,9 @@
 package com.eword.business;
 
 import com.eword.beans.User;
-import com.eword.dao.DAOFactory;
-import com.eword.dao.interfaces.UserDAO;
+import com.eword.dao.UserDAO;
 import com.eword.lang.Lang;
+import javax.ejb.EJB;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +39,8 @@ public class AuthenticationBusiness {
     /**
      * Object enabling to communicate with the User data layer
      */
-    private static final UserDAO USER_DAO = DAOFactory.getInstance().getUserDAO();
+    @EJB
+    private UserDAO userDAO;
 
     /**
      * Update the session and the cookies according to the user's information
@@ -49,7 +50,7 @@ public class AuthenticationBusiness {
      * @param req The request
      * @param resp The response
      */
-    public static void authenticatedUser(User user, boolean rememberMe, HttpServletRequest req, HttpServletResponse resp) {
+    public void authenticatedUser(User user, boolean rememberMe, HttpServletRequest req, HttpServletResponse resp) {
 
         HttpSession session = req.getSession();
 
@@ -72,7 +73,7 @@ public class AuthenticationBusiness {
 
             //The user's token is updated
             user.setToken(StringUtils.sha256(token));
-            USER_DAO.update(user);
+            userDAO.update(user);
         }
     }
 
@@ -83,13 +84,13 @@ public class AuthenticationBusiness {
      * @param token The user's token
      * @return A User if the parameters match a user or null if not
      */
-    public static User checkRememberMe(String hashedId, String token) {
+    public User checkRememberMe(String hashedId, String token) {
 
         User user = null;
         String hashedToken = StringUtils.sha256(token);
 
         //We search for a user from the token
-        User userToken = USER_DAO.findIdFromToken(hashedToken);
+        User userToken = userDAO.findIdFromToken(hashedToken);
 
         //If both ids match, the User is returned
         if (userToken != null && hashedId.equals(StringUtils.sha256(String.valueOf(userToken.getId())))) {

@@ -1,14 +1,22 @@
 package com.eword.dao;
 
-import com.eword.dao.interfaces.*;
 import com.eword.beans.Quote;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-public interface QuoteDAO {
+@Stateless
+public class QuoteDAO {
+
+    @PersistenceContext(unitName = "MySQL")
+    private EntityManager em;
 
     /**
      * Returns a random Quote
      *
      * @return a Quote object selected randomly
      */
-    Quote findRandom();
+    public Quote findRandom() {
+        return new Quote();
+    }
 }

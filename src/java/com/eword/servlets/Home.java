@@ -26,7 +26,8 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //A random quote is selected and set as a request attribute
-        Quote quote = QuoteBusiness.getRandomQuote();
+        QuoteBusiness quoteBusiness = new QuoteBusiness();
+        Quote quote = quoteBusiness.getRandomQuote();
         req.setAttribute(ATT_QUOTE, quote);
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);

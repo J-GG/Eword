@@ -20,7 +20,7 @@ public class WordDAO {
      * @return a list of words or null if the id doesn't correpond to any
      * wordlist
      */
-    List<Word> findAll(int wordlistId) {
+    public List<Word> findAll(int wordlistId) {
         List<Word> list = null;
 
         Query requete = em.createNamedQuery("SELECT w FROM Word w");

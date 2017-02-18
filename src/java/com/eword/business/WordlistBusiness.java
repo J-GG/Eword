@@ -2,11 +2,12 @@ package com.eword.business;
 
 import com.eword.beans.Word;
 import com.eword.beans.Wordlist;
-import com.eword.dao.DAOFactory;
-import com.eword.dao.interfaces.WordDAO;
-import com.eword.dao.interfaces.WordlistDAO;
+import com.eword.dao.WordDAO;
+import com.eword.dao.WordlistDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,12 +21,14 @@ public class WordlistBusiness {
     /**
      * Object enabling to communicate with the Wordlist data layer
      */
-    private static final WordlistDAO WORDLIST_DAO = DAOFactory.getInstance().getWordlistDAO();
+    @EJB
+    private WordlistDAO WordlistDAO;
 
     /**
-     * Oobject enabling to communicate with the Word data layer
+     * Object enabling to communicate with the Word data layer
      */
-    private static final WordDAO WORD_DAO = DAOFactory.getInstance().getWordDAO();
+    @EJB
+    private WordDAO WordDAO;
 
     /**
      * Return a Wordlist with all its information, including the list of words
@@ -34,21 +37,21 @@ public class WordlistBusiness {
      * @param wordlistId The id of the wordlist
      * @return A full Wordlist
      */
-    public static Wordlist getPopulatedWordlist(HttpServletRequest req, int wordlistId) {
+    public Wordlist getPopulatedWordlist(HttpServletRequest req, int wordlistId) {
 
         //We first retrieve the information of the wordlist without the list of words
-        Wordlist wordlist = WORDLIST_DAO.find(wordlistId);
+        Wordlist wordlist = WordlistDAO.find(wordlistId);
 
         if (wordlist != null) {
             //We check the wordlist belongs to the user
             HttpSession session = req.getSession();
             Integer userId = (Integer) session.getAttribute(ATT_USER_ID);
-            if (!userId.equals(wordlist.getUserId())) {
+            if (!userId.equals(wordlist.getUser().getId())) {
                 throw new RuntimeException("The wordlist doesn't belong to the user");
             }
 
             //We add the list of words
-            ArrayList<Word> words = WORD_DAO.findAll(wordlistId);
+            List<Word> words = WordDAO.findAll(wordlistId);
             wordlist.setWords(words);
         }
 
@@ -63,7 +66,7 @@ public class WordlistBusiness {
      * @param req The request
      * @return A Map of Wordlists sorted by language
      */
-    public static HashMap<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages(HttpServletRequest req) {
+    public HashMap<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages(HttpServletRequest req) {
 
         HashMap<ArrayList<String>, ArrayList<Wordlist>> mapWordlists = new HashMap<>();
 
@@ -75,7 +78,7 @@ public class WordlistBusiness {
         //If there is a user id
         if (userId != null) {
             //We get all the Wordlists
-            ArrayList<Wordlist> wordlists = WORDLIST_DAO.findAll(userId);
+            List<Wordlist> wordlists = WordlistDAO.findAll(userId);
 
             //Wordlists are sorted by language
             for (Wordlist wordlist : wordlists) {
