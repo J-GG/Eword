@@ -3,6 +3,9 @@ package com.eword.business;
 import com.eword.beans.Quote;
 import com.eword.dao.QuoteDAO;
 
+/**
+ * A class which gathers the business functions about Quotes.
+ */
 public class QuoteBusiness {
 
     /**

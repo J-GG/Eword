@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- * Represents a quote including the name of the author.
+ * Represents a quote by its content and its author.
  */
 @Entity
 public class Quote implements Serializable {

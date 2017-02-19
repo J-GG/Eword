@@ -72,8 +72,9 @@
                     <li class="dropdown language_picker">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="flag-icon flag-icon-${lang["langCode"]}"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="<c:url value="/lang/us" />"><span class="flag-icon flag-icon-us"></span> English</a></li>
-                            <li><a href="<c:url value="/lang/fr" />"><span class="flag-icon flag-icon-fr"></span> Français</a></li>
+                            <c:forEach var="language" items="${listLanguages}">
+                                <li><a href="<c:url value="/lang/${language.code}" />"><span class="flag-icon flag-icon-${language.code}"></span> ${language.name}</a></li>
+                                </c:forEach>
                         </ul>
                     </li>
                 </ul>

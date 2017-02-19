@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet managing the home page.
+ */
 @WebServlet("/home")
 public class Home extends HttpServlet {
 
@@ -23,7 +26,7 @@ public class Home extends HttpServlet {
     private QuoteDAO quoteDAO;
 
     /**
-     * JSP file to display
+     * JSP file to be displayed
      */
     private static final String VIEW = "/WEB-INF/index.jsp";
 

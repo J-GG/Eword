@@ -1,6 +1,7 @@
 package com.eword.dao;
 
 import com.eword.beans.Quote;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -18,21 +19,36 @@ public class QuoteDAO {
     private EntityManager em;
 
     /**
-     * Returns a random Quote
+     * Return all the Quotes
      *
-     * @return a Quote object selected randomly
+     * @return a List of all the Quotes
+     */
+    public List<Quote> findAll() {
+        List list;
+
+        Query request = em.createQuery("SELECT q FROM Quote q");
+        list = request.getResultList();
+
+        return list;
+    }
+
+    /**
+     * Return a random Quote
+     *
+     * @return a Quote object selected randomly or null if there is no Quote
      */
     public Quote findRandom() {
         Quote quote = null;
 
-        Query requete = em.createQuery("SELECT q FROM Quote q");
-        if (!requete.getResultList().isEmpty()) {
+        //If the list is not empty, a random quote is picked from the list
+        List<Quote> list = findAll();
+        if (!list.isEmpty()) {
             //A random number is generated from the number of quotes
-            long nbQuotes = requete.getResultList().size();
+            long nbQuotes = list.size();
             int quoteRandom = ThreadLocalRandom.current().nextInt(0, (int) (nbQuotes));
 
-            //We search for the random-number-th quote
-            quote = (Quote) requete.getResultList().get(quoteRandom);
+            //We get the random-number-th quote
+            quote = (Quote) list.get(quoteRandom);
         }
 
         return quote;

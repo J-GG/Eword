@@ -20,7 +20,8 @@ import javax.servlet.http.HttpSession;
 public class LanguageSelection extends HttpServlet {
 
     /**
-     * Name of the request attribute containing the translations
+     * Name of the request attribute containing the translations for the display
+     * language chosen by the user
      */
     private final static String ATT_LANG = "lang";
 
