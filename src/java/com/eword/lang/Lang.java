@@ -1,12 +1,8 @@
 package com.eword.lang;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.Properties;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class manages the translations of the languages of the application
@@ -16,12 +12,7 @@ public class Lang {
     /**
      * Default Language used everywhere in the application
      */
-    private final static Language DEFAULT_LANG = Language.ENGLISH;
-
-    /**
-     * Extension of all the properties files
-     */
-    private final static String EXTENSION = ".properties";
+    private static final Language DEFAULT_LANG = Language.ENGLISH;
 
     /**
      * Unique instance of Lang
@@ -36,48 +27,37 @@ public class Lang {
     /**
      * Map of translations sorted by Language
      */
-    private static final HashMap<Language, HashMap<String, String>> TRANSLATIONS = new HashMap<>();
+    private static final Map<Language, Map<String, String>> TRANSLATIONS = new HashMap<>();
 
     /**
-     * PATH to the the properties files containing the translations
+     * Object enabling to communicate with the Translation data layer
      */
-    private final static String TRANSLATIONS_PATH = "com/eword/lang/";
+    private static final TranslationDAO TRANSLATION_DAO = new TranslationDAO();
 
     /**
      * Create an instance of Lang
      */
     private Lang() {
-        //We load the default properties file
-        Properties propertiesDefault = new Properties();
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream propertiesDefaultFile = classLoader.getResourceAsStream(TRANSLATIONS_PATH + DEFAULT_LANG.getCode() + EXTENSION);
+        List<Translation> translationsList = TRANSLATION_DAO.findAll();
 
-        try {
-            propertiesDefault.load(propertiesDefaultFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Lang.class.getName()).log(Level.SEVERE, null, ex);
+        //Creation of the Map of Languages
+        for (Language lang : Language.values()) {
+            Map<String, String> firstTranslation = new HashMap<>();
+            firstTranslation.put(KEY_LANG_CODE, lang.getCode());
+            TRANSLATIONS.put(lang, firstTranslation);
         }
 
-        //We load all the properties files
-        for (Language lang : Language.values()) {
-            Properties properties = new Properties();
-            InputStream propertiesFile = classLoader.getResourceAsStream(TRANSLATIONS_PATH + lang.getCode() + EXTENSION);
+        //Each translation is added to the Map of its Language
+        for (Translation translation : translationsList) {
+            TRANSLATIONS.get(translation.getLanguage()).put(translation.getKey(), translation.getTranslation());
+        }
 
-            try {
-                properties.load(propertiesFile);
-
-                Set<Object> keys = propertiesDefault.keySet();
-                HashMap<String, String> tr = new HashMap<>();
-                tr.put(KEY_LANG_CODE, lang.getCode());
-                for (Object k : keys) {
-                    String key = (String) k;
-                    String defaultValue = propertiesDefault.getProperty(key);
-                    tr.put(key, properties.getProperty(key, defaultValue));
-                }
-
-                TRANSLATIONS.put(lang, tr);
-            } catch (IOException ex) {
-                Logger.getLogger(Lang.class.getName()).log(Level.SEVERE, null, ex);
+        //For missing translations, the translation of the default language is added
+        for (Language keyLang : TRANSLATIONS.keySet()) {
+            Map<String, String> tr = TRANSLATIONS.get(keyLang);
+            for (String key : tr.keySet()) {
+                String defaultValue = TRANSLATIONS.get(DEFAULT_LANG).get(key);
+                TRANSLATIONS.get(keyLang).putIfAbsent(key, defaultValue);
             }
         }
     }
@@ -109,7 +89,7 @@ public class Lang {
      *
      * @return A Map of the translations for the default Language
      */
-    public HashMap<String, String> getDefaultTranslations() {
+    public Map<String, String> getDefaultTranslations() {
         return getTranslations(DEFAULT_LANG);
     }
 
@@ -119,7 +99,7 @@ public class Lang {
      * @param lang Language of the translations
      * @return A Map of the translations for this Language
      */
-    public HashMap<String, String> getTranslations(Language lang) {
+    public Map<String, String> getTranslations(Language lang) {
         return TRANSLATIONS.get(lang);
     }
 

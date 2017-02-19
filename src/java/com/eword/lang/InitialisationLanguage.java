@@ -21,7 +21,6 @@ public class InitialisationLanguage implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
         servletContext.setAttribute(ATT_LIST_LANGUAGES, Lang.Language.values());
-        System.out.println("test");
     }
 
 }
