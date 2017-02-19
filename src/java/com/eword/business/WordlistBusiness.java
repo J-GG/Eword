@@ -7,7 +7,6 @@ import com.eword.dao.WordlistDAO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,28 +18,16 @@ public class WordlistBusiness {
     private static final String ATT_USER_ID = "user_id";
 
     /**
-     * Object enabling to communicate with the Wordlist data layer
-     */
-    @EJB
-    private WordlistDAO WordlistDAO;
-
-    /**
-     * Object enabling to communicate with the Word data layer
-     */
-    @EJB
-    private WordDAO WordDAO;
-
-    /**
      * Return a Wordlist with all its information, including the list of words
      *
      * @param req The request
      * @param wordlistId The id of the wordlist
      * @return A full Wordlist
      */
-    public Wordlist getPopulatedWordlist(HttpServletRequest req, int wordlistId) {
+    public Wordlist getPopulatedWordlist(int wordlistId, WordlistDAO wordlistDAO, WordDAO wordDAO, HttpServletRequest req) {
 
         //We first retrieve the information of the wordlist without the list of words
-        Wordlist wordlist = WordlistDAO.find(wordlistId);
+        Wordlist wordlist = wordlistDAO.find(wordlistId);
 
         if (wordlist != null) {
             //We check the wordlist belongs to the user
@@ -51,7 +38,7 @@ public class WordlistBusiness {
             }
 
             //We add the list of words
-            List<Word> words = WordDAO.findAll(wordlistId);
+            List<Word> words = wordDAO.findAll(wordlistId);
             wordlist.setWords(words);
         }
 
@@ -66,7 +53,7 @@ public class WordlistBusiness {
      * @param req The request
      * @return A Map of Wordlists sorted by language
      */
-    public HashMap<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages(HttpServletRequest req) {
+    public HashMap<ArrayList<String>, ArrayList<Wordlist>> mapByLanguages(WordlistDAO wordlistDAO, HttpServletRequest req) {
 
         HashMap<ArrayList<String>, ArrayList<Wordlist>> mapWordlists = new HashMap<>();
 
@@ -78,7 +65,7 @@ public class WordlistBusiness {
         //If there is a user id
         if (userId != null) {
             //We get all the Wordlists
-            List<Wordlist> wordlists = WordlistDAO.findAll(userId);
+            List<Wordlist> wordlists = wordlistDAO.findAll(userId);
 
             //Wordlists are sorted by language
             for (Wordlist wordlist : wordlists) {

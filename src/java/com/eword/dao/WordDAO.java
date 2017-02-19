@@ -23,7 +23,7 @@ public class WordDAO {
     public List<Word> findAll(int wordlistId) {
         List<Word> list = null;
 
-        Query requete = em.createNamedQuery("SELECT w FROM Word w");
+        Query requete = em.createQuery("SELECT w FROM Word w");
         list = requete.getResultList();
 
         return list;

@@ -2,7 +2,9 @@ package com.eword.filters;
 
 import com.eword.beans.User;
 import com.eword.business.AuthenticationBusiness;
+import com.eword.dao.UserDAO;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -19,19 +21,24 @@ import javax.servlet.http.HttpSession;
 public class RememberMeFilter implements Filter {
 
     /**
-     * Name of the cookie storing the token
+     * Name of the session attribute containing the id of the user
      */
-    private static final String COOKIE_TOKEN_NAME = "token";
+    private static final String ATT_USER_ID = "user_id";
 
     /**
      * Name of the cookie storing the id
      */
     private static final String COOKIE_ID_NAME = "id";
+    /**
+     * Name of the cookie storing the token
+     */
+    private static final String COOKIE_TOKEN_NAME = "token";
 
     /**
-     * Name of the session attribute containing the id of the user
+     * Object enabling to communicate with the User data layer
      */
-    private static final String ATT_USER_ID = "user_id";
+    @EJB
+    private UserDAO userDAO;
 
     @Override
     public void destroy() {
@@ -66,9 +73,9 @@ public class RememberMeFilter implements Filter {
             if (hashedId != null && token != null) {
                 //We check if the information of the cookie matches a user. If it is the case, the user is authenticated
                 AuthenticationBusiness authenticationBusiness = new AuthenticationBusiness();
-                User user = authenticationBusiness.checkRememberMe(hashedId, token);
+                User user = authenticationBusiness.checkRememberMe(hashedId, token, userDAO);
                 if (user != null) {
-                    authenticationBusiness.authenticatedUser(user, true, req, res);
+                    authenticationBusiness.authenticatedUser(user, true, userDAO, req, res);
                 }
             }
         }

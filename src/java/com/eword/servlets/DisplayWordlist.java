@@ -2,9 +2,12 @@ package com.eword.servlets;
 
 import com.eword.beans.Wordlist;
 import com.eword.business.WordlistBusiness;
+import com.eword.dao.WordDAO;
+import com.eword.dao.WordlistDAO;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +27,18 @@ public class DisplayWordlist extends HttpServlet {
      */
     private static final String ATT_WORDLIST = "wordlist";
 
+    /**
+     * Object enabling to communicate with the Wordlist data layer
+     */
+    @EJB
+    private WordlistDAO wordlistDAO;
+
+    /**
+     * Object enabling to communicate with the Word data layer
+     */
+    @EJB
+    private WordDAO wordDAO;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -41,7 +56,7 @@ public class DisplayWordlist extends HttpServlet {
 
             //A wordlist object containing the list of words is retrieved from the id of the wordlist and set into a request attribute
             WordlistBusiness wordlistBusiness = new WordlistBusiness();
-            Wordlist wordlist = wordlistBusiness.getPopulatedWordlist(req, wordlistId);
+            Wordlist wordlist = wordlistBusiness.getPopulatedWordlist(wordlistId, wordlistDAO, wordDAO, req);
             req.setAttribute(ATT_WORDLIST, wordlist);
 
             this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);

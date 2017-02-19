@@ -4,7 +4,6 @@ import com.eword.beans.User;
 import com.eword.dao.UserDAO;
 import com.eword.lang.Lang.Language;
 import java.util.HashMap;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -29,12 +28,6 @@ public class SignupForm {
      * Name of the field of the form containing the username
      */
     private static final String PARAM_USERNAME = "username";
-
-    /**
-     * Object enabling to communicate with the User data layer
-     */
-    @EJB
-    private UserDAO userDAO;
 
     /**
      * Map of all the input errors
@@ -87,7 +80,7 @@ public class SignupForm {
      * @param req The request
      * @return A User with the information from the form
      */
-    public User signupValidation(HttpServletRequest req) {
+    public User signupValidation(UserDAO userDAO, HttpServletRequest req) {
 
         User user = new User();
 
@@ -97,7 +90,7 @@ public class SignupForm {
 
         //The username is validated and set
         try {
-            usernameValidation(username);
+            usernameValidation(username, userDAO);
         } catch (Exception ex) {
             errors.put(PARAM_USERNAME, ex.getMessage());
         }
@@ -140,7 +133,7 @@ public class SignupForm {
      *
      * @param username The username to check
      */
-    private void usernameValidation(String username) throws Exception {
+    private void usernameValidation(String username, UserDAO userDAO) throws Exception {
         if (username != null) {
             if (username.length() < 4 || username.length() > 30) {
                 throw new Exception("The username must be more than 4 and less than 30 characters long");

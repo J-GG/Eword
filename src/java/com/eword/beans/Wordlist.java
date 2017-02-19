@@ -1,5 +1,6 @@
 package com.eword.beans;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Wordlist {
+public class Wordlist implements Serializable {
 
     /**
      * Destination language of the wordlist
@@ -56,6 +57,9 @@ public class Wordlist {
      */
     public void addWord(Word word) {
         words.add(word);
+        if (word.getWordlist() != this) {
+            word.setWordlist(this);
+        }
     }
 
     /**

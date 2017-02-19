@@ -2,11 +2,13 @@ package com.eword.servlets;
 
 import com.eword.beans.User;
 import com.eword.business.UserBusiness;
+import com.eword.dao.UserDAO;
 import com.eword.lang.Lang;
 import com.eword.lang.Lang.Language;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,12 @@ public class LanguageSelection extends HttpServlet {
      * Name of the session attribute containing the id of the user
      */
     private static final String ATT_USER_ID = "user_id";
+
+    /**
+     * Object enabling to communicate with the User data layer
+     */
+    @EJB
+    private UserDAO userDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -63,9 +71,9 @@ public class LanguageSelection extends HttpServlet {
         Integer userId = (Integer) session.getAttribute(ATT_USER_ID);
         if (userId != null) {
             UserBusiness userBusiness = new UserBusiness();
-            User user = userBusiness.getUserFromId(userId);
+            User user = userBusiness.getUserFromId(userId, userDAO);
             user.setLanguage(lang);
-            userBusiness.updateUser(user);
+            userBusiness.updateUser(user, userDAO);
         }
 
         //The user is redirected

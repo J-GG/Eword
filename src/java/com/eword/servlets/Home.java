@@ -2,7 +2,9 @@ package com.eword.servlets;
 
 import com.eword.beans.Quote;
 import com.eword.business.QuoteBusiness;
+import com.eword.dao.QuoteDAO;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,9 @@ public class Home extends HttpServlet {
      */
     private static final String ATT_QUOTE = "quote";
 
+    @EJB
+    private QuoteDAO quoteDAO;
+
     /**
      * JSP file to display
      */
@@ -26,8 +31,7 @@ public class Home extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         //A random quote is selected and set as a request attribute
-        QuoteBusiness quoteBusiness = new QuoteBusiness();
-        Quote quote = quoteBusiness.getRandomQuote();
+        Quote quote = QuoteBusiness.getRandomQuote(quoteDAO);
         req.setAttribute(ATT_QUOTE, quote);
 
         this.getServletContext().getRequestDispatcher(VIEW).forward(req, resp);

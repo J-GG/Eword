@@ -2,7 +2,10 @@ package com.eword.beans;
 
 import com.eword.lang.Lang;
 import com.eword.lang.Lang.Language;
+import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     /**
      * The user's id
@@ -22,6 +25,7 @@ public class User {
     /**
      * The user's language
      */
+    @Enumerated(EnumType.STRING)
     private Language language = Lang.getDefaultLang();
 
     /**
@@ -30,14 +34,14 @@ public class User {
     private String password;
 
     /**
-     * The user's username
-     */
-    private String username;
-
-    /**
      * The user's token
      */
     private String token;
+
+    /**
+     * The user's username
+     */
+    private String username;
 
     /**
      * Return the user's id
@@ -94,24 +98,6 @@ public class User {
     }
 
     /**
-     * Return the user's username
-     *
-     * @return The user's username
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * Set the user's username
-     *
-     * @param username The user's username
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    /**
      * Return the user's token
      *
      * @return The user's token
@@ -127,6 +113,24 @@ public class User {
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     * Return the user's username
+     *
+     * @return The user's username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Set the user's username
+     *
+     * @param username The user's username
+     */
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

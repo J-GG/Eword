@@ -1,5 +1,6 @@
 package com.eword.beans;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Word {
+public class Word implements Serializable {
 
     /**
      * Examples of the Word
@@ -151,5 +152,8 @@ public class Word {
      */
     public void setWordlist(Wordlist wordlist) {
         this.wordlist = wordlist;
+        if (!wordlist.getWords().contains(this)) {
+            wordlist.addWord(this);
+        }
     }
 }

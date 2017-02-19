@@ -2,7 +2,9 @@ package com.eword.servlets;
 
 import com.eword.beans.User;
 import com.eword.business.SignupForm;
+import com.eword.dao.UserDAO;
 import java.io.IOException;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +30,12 @@ public class Signup extends HttpServlet {
      */
     private static final String VIEW = "/WEB-INF/signup.jsp";
 
+    /**
+     * Object enabling to communicate with the User data layer
+     */
+    @EJB
+    private UserDAO userDAO;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -46,7 +54,7 @@ public class Signup extends HttpServlet {
 
         //The form is checked by the SignupForm object
         SignupForm signupForm = new SignupForm();
-        User user = signupForm.signupValidation(req);
+        User user = signupForm.signupValidation(userDAO, req);
 
         if (signupForm.getErrors().isEmpty()) {
             //If there is no error, the SignupForm object is set as a session attribute and the page is reloaded (to avoid the forward and the refresh problem)

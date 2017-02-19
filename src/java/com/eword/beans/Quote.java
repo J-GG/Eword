@@ -1,6 +1,13 @@
 package com.eword.beans;
 
-public class Quote {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Quote implements Serializable {
 
     /**
      * Author's name of the quote
@@ -15,6 +22,8 @@ public class Quote {
     /**
      * Id of the quote
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     /**

@@ -3,7 +3,6 @@ package com.eword.business;
 import com.eword.beans.User;
 import com.eword.dao.UserDAO;
 import com.eword.lang.Lang;
-import javax.ejb.EJB;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,20 +36,14 @@ public class AuthenticationBusiness {
     private static final String COOKIE_TOKEN_NAME = "token";
 
     /**
-     * Object enabling to communicate with the User data layer
-     */
-    @EJB
-    private UserDAO userDAO;
-
-    /**
      * Update the session and the cookies according to the user's information
      *
      * @param user The authenticated User
-     * @param rememberMe True to enable a long-term persistent authentification
+     * @param rememberMe True to enable a long-term persistent authentication
      * @param req The request
      * @param resp The response
      */
-    public void authenticatedUser(User user, boolean rememberMe, HttpServletRequest req, HttpServletResponse resp) {
+    public void authenticatedUser(User user, boolean rememberMe, UserDAO userDAO, HttpServletRequest req, HttpServletResponse resp) {
 
         HttpSession session = req.getSession();
 
@@ -84,7 +77,7 @@ public class AuthenticationBusiness {
      * @param token The user's token
      * @return A User if the parameters match a user or null if not
      */
-    public User checkRememberMe(String hashedId, String token) {
+    public User checkRememberMe(String hashedId, String token, UserDAO userDAO) {
 
         User user = null;
         String hashedToken = StringUtils.sha256(token);

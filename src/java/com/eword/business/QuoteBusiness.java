@@ -2,30 +2,17 @@ package com.eword.business;
 
 import com.eword.beans.Quote;
 import com.eword.dao.QuoteDAO;
-import javax.ejb.EJB;
 
 public class QuoteBusiness {
 
     /**
-     * Object enabling to communicate with the Quote data layer
-     */
-    @EJB
-    private QuoteDAO quoteDAO;
-
-    /**
      * Return a random Quote
      *
+     * @param quoteDAO Object enabling to communicate with the data layer
      * @return A random Quote
      */
-    public Quote getRandomQuote() {
+    public static Quote getRandomQuote(QuoteDAO quoteDAO) {
 
-        if (quoteDAO == null) {
-            System.out.println("h");
-        } else {
-            System.out.println("oui");
-        }
-        Quote quote = quoteDAO.findRandom();
-
-        return quote;
+        return quoteDAO.findRandom();
     }
 }

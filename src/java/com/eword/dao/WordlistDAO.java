@@ -38,7 +38,7 @@ public class WordlistDAO {
     public List<Wordlist> findAll(int userId) {
         List<Wordlist> list = null;
 
-        Query requete = em.createNamedQuery("SELECT w FROM Wordlist w");
+        Query requete = em.createQuery("SELECT w FROM Wordlist w");
         list = requete.getResultList();
 
         return list;

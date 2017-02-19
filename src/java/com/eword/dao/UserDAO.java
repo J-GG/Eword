@@ -46,9 +46,9 @@ public class UserDAO {
     public boolean exist(String username) {
         boolean exist = false;
 
-        Query requete = em.createQuery("SELECT u FROM User u WHERE u.username=:username");
+        Query requete = em.createQuery("SELECT u.id FROM User u WHERE u.username=:username");
         requete.setParameter("username", username);
-        if (requete.getResultList().isEmpty()) {
+        if (!requete.getResultList().isEmpty()) {
             exist = true;
         }
 
@@ -66,10 +66,14 @@ public class UserDAO {
     public User find(String username, String password) {
         User user = null;
 
-        Query requete = em.createQuery("SELECT u FROM User u WHERE u.username=:username AND u.password=:password");
-        requete.setParameter("username", username);
-        requete.setParameter("password", password);
-        user = (User) requete.getSingleResult();
+        try {
+            Query requete = em.createQuery("SELECT u FROM User u WHERE u.username=:username AND u.password=:password");
+            requete.setParameter("username", username);
+            requete.setParameter("password", password);
+            user = (User) requete.getSingleResult();
+        } catch (Exception ex) {
+
+        }
 
         return user;
     }
