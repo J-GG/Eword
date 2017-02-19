@@ -6,6 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+/**
+ * A class which enables to interact with the data layer regarding the User
+ * entity.
+ */
 @Stateless
 public class UserDAO {
 

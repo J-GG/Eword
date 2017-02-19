@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+/**
+ * Represents a user's list of Words with a title, destination and source
+ * languages.
+ */
 @Entity
 public class Wordlist implements Serializable {
 
@@ -21,7 +25,7 @@ public class Wordlist implements Serializable {
     private String destinationLanguage;
 
     /**
-     * If of the wordlist
+     * Id of the wordlist
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +49,7 @@ public class Wordlist implements Serializable {
     private User user;
 
     /**
-     * List of words
+     * List of Words
      */
     @OneToMany(mappedBy = "wordlist", cascade = CascadeType.ALL)
     private List<Word> words;
@@ -65,7 +69,7 @@ public class Wordlist implements Serializable {
     /**
      * Return the destination language of the wordlist
      *
-     * @return The desitnation language of the wordlist
+     * @return The destination language of the wordlist
      */
     public String getDestinationLanguage() {
         return destinationLanguage;
@@ -171,7 +175,7 @@ public class Wordlist implements Serializable {
     }
 
     /**
-     * Removes the first occurence of the Word from the list
+     * Removes the first occurrence of the Word from the list
      *
      * @param word Word to be removed from the list
      */

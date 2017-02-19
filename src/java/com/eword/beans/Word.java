@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/**
+ * Represents a word, its translation and additional information.
+ */
 @Entity
 public class Word implements Serializable {
 

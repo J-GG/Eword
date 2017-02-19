@@ -11,6 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Represents a member of the application. Contains personal information as well
+ * as information relevant to the application.
+ */
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -23,7 +27,7 @@ public class User implements Serializable {
     private int id;
 
     /**
-     * The user's language
+     * The user's language in which the application is displayed
      */
     @Enumerated(EnumType.STRING)
     private Language language = Lang.getDefaultLang();
@@ -62,7 +66,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Return the user's language
+     * Return the user's language in which the application is displayed
      *
      * @return The user's language
      */
@@ -71,7 +75,7 @@ public class User implements Serializable {
     }
 
     /**
-     * Set the user's language
+     * Set the user's language in which the application is displayed
      *
      * @param language The user's language
      */

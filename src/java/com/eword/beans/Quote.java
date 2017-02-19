@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * Represents a quote including the name of the author.
+ */
 @Entity
 public class Quote implements Serializable {
 

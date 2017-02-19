@@ -38,7 +38,7 @@ public class Lang {
     /**
      * Map of translations sorted by Language
      */
-    private static HashMap<Language, HashMap<String, String>> TRANSLATIONS = new HashMap<>();
+    private static final HashMap<Language, HashMap<String, String>> TRANSLATIONS = new HashMap<>();
 
     /**
      * Creates an instance of a utilitarian class to manage translations
