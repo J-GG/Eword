@@ -48,7 +48,7 @@ public class NavbarFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        //We compare the URL to patterns to determine on which tab is the user
+        //We compare the URL to patterns to determine on which tab the user is
         String context = req.getContextPath();
         Pattern pattern_home = Pattern.compile(context + "/$");
         Pattern pattern_lists = Pattern.compile(context + "/lists(/?)([0-9]*)$");

@@ -1,5 +1,6 @@
 package com.eword.filters;
 
+import com.eword.business.ServletUtils;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This filter checks if the user is connected. If not, they are redirected.
+ */
 @WebFilter({"/lists", "/lists/*"})
 public class LoggedoutFilter implements Filter {
 
@@ -28,12 +32,8 @@ public class LoggedoutFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        //Creation of the path for the redirection. It is either the previous page or the home page
-        String address = req.getHeader("referer");
-        if (address == null || address.contains(req.getRequestURL())) {
-            //If there is no previous page or if it's the same as the current page
-            address = req.getContextPath();
-        }
+        //We get the adress to which the user will be redirected
+        String address = ServletUtils.getPreviousPage(req);
 
         //If the user is not connected, they are redirected
         if (req.getSession().getAttribute(ATT_USER_ID) == null) {

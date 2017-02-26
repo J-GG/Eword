@@ -1,6 +1,7 @@
 package com.eword.servlets;
 
 import com.eword.beans.User;
+import com.eword.business.ServletUtils;
 import com.eword.business.UserBusiness;
 import com.eword.dao.UserDAO;
 import com.eword.lang.Lang;
@@ -39,15 +40,11 @@ public class LanguageSelection extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        //Creation of the path for the redirection. It is either the previous page or the home page
-        String address = req.getHeader("referer");
-        String context = req.getContextPath();
-        if (address == null) {
-            address = context;
-        }
+        //We get the adress to which the user will be redirected
+        String address = ServletUtils.getPreviousPage(req);
 
         //Verification that the URL is correct. if not, the user is redirected
-        Matcher matcher = Pattern.compile(context + "/lang/([a-z]{2})$").matcher(req.getRequestURI());
+        Matcher matcher = Pattern.compile(req.getContextPath() + "/lang/([a-z]{2})$").matcher(req.getRequestURI());
 
         if (!matcher.find()) {
             resp.sendRedirect(address);
