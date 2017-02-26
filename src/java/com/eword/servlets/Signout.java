@@ -1,5 +1,6 @@
 package com.eword.servlets;
 
+import com.eword.business.ServletUtils;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +35,7 @@ public class Signout extends HttpServlet {
         HttpSession session = req.getSession();
         session.invalidate();
 
-        //The cookies are destroyed
+        //Cookies are destroyed
         Cookie cookieId = new Cookie(COOKIE_ID_NAME, null);
         cookieId.setMaxAge(COOKIE_MAX_AGE);
         cookieId.setPath(req.getContextPath());
@@ -45,11 +46,8 @@ public class Signout extends HttpServlet {
         cookieToken.setPath(req.getContextPath());
         resp.addCookie(cookieToken);
 
-        //The user is redirected to the last page visited or to the home page
-        String address = req.getHeader("referer");
-        if (address == null) {
-            address = req.getContextPath();
-        }
+        //We get the adress to which the user will be redirected
+        String address = ServletUtils.getPreviousPage(req);
 
         resp.sendRedirect(address);
     }

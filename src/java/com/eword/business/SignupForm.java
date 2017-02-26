@@ -30,6 +30,26 @@ public class SignupForm {
     private static final String PARAM_USERNAME = "username";
 
     /**
+     * The max length of the username
+     */
+    private static final int MAX_LENGTH_USERNAME = 30;
+
+    /**
+     * The min length of the username
+     */
+    private static final int MIN_LENGTH_USERNAME = 4;
+
+    /**
+     * The max length of the password
+     */
+    private static final int MAX_LENGTH_PASSWORD = 255;
+
+    /**
+     * The min length of the password
+     */
+    private static final int MIN_LENGTH_PASSWORD = 4;
+
+    /**
      * Map of all the input errors
      */
     private HashMap<String, String> errors = new HashMap<>();
@@ -65,8 +85,8 @@ public class SignupForm {
      */
     private void passwordValidation(String password) throws Exception {
         if (password != null) {
-            if (password.length() < 4) {
-                throw new Exception("The password must be more than 4 characters long");
+            if (password.length() < MIN_LENGTH_PASSWORD || password.length() > MAX_LENGTH_PASSWORD) {
+                throw new Exception("The username must be at least " + MIN_LENGTH_PASSWORD + " and no more than " + MAX_LENGTH_PASSWORD + " characters long");
             }
         } else {
             throw new Exception("A password is required");
@@ -99,7 +119,6 @@ public class SignupForm {
         //The password is validated and set
         try {
             passwordValidation(password);
-
         } catch (Exception ex) {
             errors.put(PARAM_PASSWORD, ex.getMessage());
         }
@@ -119,8 +138,7 @@ public class SignupForm {
             result = "You successfully registered ! We're pleased that you have chosen to become part of the community.<br />\n"
                     + "            <ul>\n"
                     + "                <li><a href=" + req.getContextPath() + ">Return to the home page</a></li>\n"
-                    + "            </ul>\n"
-                    + "";
+                    + "            </ul>\n";
         } else {
             result = "Your registration failed.";
         }
@@ -135,8 +153,8 @@ public class SignupForm {
      */
     private void usernameValidation(String username, UserDAO userDAO) throws Exception {
         if (username != null) {
-            if (username.length() < 4 || username.length() > 30) {
-                throw new Exception("The username must be more than 4 and less than 30 characters long");
+            if (username.length() < MIN_LENGTH_USERNAME || username.length() > MAX_LENGTH_USERNAME) {
+                throw new Exception("The username must be at least " + MIN_LENGTH_USERNAME + " and no more than " + MAX_LENGTH_USERNAME + " characters long");
             } else if (!username.matches("^[a-zA-Z0-9_\\.]+$")) {
                 throw new Exception("The username can only consist of alphabetical, number, dot and underscore");
             } else if (userDAO.exist(username)) {

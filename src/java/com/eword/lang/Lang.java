@@ -54,7 +54,7 @@ public class Lang {
 
         //For missing translations, the translation of the default language is added
         for (Language keyLang : TRANSLATIONS.keySet()) {
-            Map<String, String> tr = TRANSLATIONS.get(keyLang);
+            Map<String, String> tr = TRANSLATIONS.get(DEFAULT_LANG);
             for (String key : tr.keySet()) {
                 String defaultValue = TRANSLATIONS.get(DEFAULT_LANG).get(key);
                 TRANSLATIONS.get(keyLang).putIfAbsent(key, defaultValue);

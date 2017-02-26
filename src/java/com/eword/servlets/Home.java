@@ -22,13 +22,13 @@ public class Home extends HttpServlet {
      */
     private static final String ATT_QUOTE = "quote";
 
-    @EJB
-    private QuoteDAO quoteDAO;
-
     /**
      * JSP file to be displayed
      */
     private static final String VIEW = "/WEB-INF/index.jsp";
+
+    @EJB
+    private QuoteDAO quoteDAO;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

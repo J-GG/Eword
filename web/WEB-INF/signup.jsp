@@ -34,7 +34,7 @@
                                    data-fv-stringlength="true"
                                    data-fv-stringlength-min="4"
                                    data-fv-stringlength-max="30"
-                                   data-fv-stringlength-message="The username must be more than 4 and less than 30 characters long"
+                                   data-fv-stringlength-message="The username must be at least 4 and no more than 30 characters long"
 
                                    data-fv-regexp="true"
                                    data-fv-regexp-regexp="^[a-zA-Z0-9_\.]+$"
@@ -63,7 +63,8 @@
                                        data-fv-stringlength="true"
 
                                        data-fv-stringlength-min="4"
-                                       data-fv-stringlength-message="The password must be more than 4 characters long"
+                                       data-fv-stringlength-max="255"
+                                       data-fv-stringlength-message="The password must be at least 4 and no more than 255 characters long"
 
                                        data-fv-callback="true"
                                        data-fv-callback-message="The password is weak"
