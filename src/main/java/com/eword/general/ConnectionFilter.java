@@ -1,4 +1,4 @@
-package com.filter;
+package com.eword.general;
 
 import java.io.IOException;
 import javax.annotation.Resource;

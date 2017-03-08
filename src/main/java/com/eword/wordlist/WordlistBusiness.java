@@ -71,7 +71,7 @@ public class WordlistBusiness {
                 languages.add(wordlist.getDestinationLanguage());
 
                 if (!mapWordlists.containsKey(languages)) {
-                    mapWordlists.put(languages, new ArrayList<>());
+                    mapWordlists.put(languages, new ArrayList());
                 }
                 mapWordlists.get(languages).add(wordlist);
             }

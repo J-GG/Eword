@@ -23,7 +23,7 @@ public class TranslationDAO {
     /**
      * PATH to the the properties files containing the translations
      */
-    private final static String TRANSLATIONS_PATH = "com/eword/lang/";
+    private final static String TRANSLATIONS_PATH = "";
 
     /**
      * Find all the translations

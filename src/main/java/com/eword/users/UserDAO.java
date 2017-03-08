@@ -29,7 +29,6 @@ public class UserDAO {
             requete.setParameter("token", token);
             user = (User) requete.getSingleResult();
         } catch (Exception ex) {
-
         }
 
         return user;
