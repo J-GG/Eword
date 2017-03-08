@@ -47,7 +47,7 @@ public class StringUtils {
         //Characters which can be used to generate the string
         char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 
-        for (int i = 0; i <= length; i++) {
+        for (int i = 0; i < length; i++) {
             char c = chars[random.nextInt(chars.length)];
             string.append(c);
         }
