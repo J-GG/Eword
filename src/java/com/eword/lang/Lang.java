@@ -108,7 +108,7 @@ public class Lang {
      */
     public enum Language {
         ENGLISH("us", "English"),
-        FRANCAIS("fr", "Français");
+        FRENCH("fr", "Français");
 
         /**
          * Code of the language

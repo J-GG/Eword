@@ -9,7 +9,8 @@ import javax.servlet.annotation.WebListener;
 public class InitialisationLanguage implements ServletContextListener {
 
     /**
-     * Name of the application attribute containing the list of
+     * Name of the application attribute containing the list of display
+     * languages
      */
     private final static String ATT_LIST_LANGUAGES = "listLanguages";
 
