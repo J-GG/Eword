@@ -1,6 +1,6 @@
 package com.eword.wordlist;
 
-import com.eword.users.User;
+import com.eword.membership.User;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;

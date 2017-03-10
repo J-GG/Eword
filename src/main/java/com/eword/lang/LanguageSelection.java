@@ -2,9 +2,9 @@ package com.eword.lang;
 
 import com.eword.general.RequestUtils;
 import com.eword.lang.Lang.Language;
-import com.eword.users.User;
-import com.eword.users.UserBusiness;
-import com.eword.users.UserDAO;
+import com.eword.membership.User;
+import com.eword.membership.UserBusiness;
+import com.eword.membership.UserDAO;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

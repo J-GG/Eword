@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import com.eword.general.RequestUtils;
 import java.io.IOException;

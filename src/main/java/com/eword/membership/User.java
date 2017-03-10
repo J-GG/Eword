@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import com.eword.lang.Lang;
 import com.eword.lang.Lang.Language;

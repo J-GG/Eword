@@ -1,34 +1,34 @@
+body{
+    font-family: 'Source Sans Pro', 'Calibri', sans-serif;
+}
+
 /** Navbar **/
 
-.navbar-default,
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav >li > a:focus,
-.navbar-default .navbar-nav > li > a{
+/*Navbar background*/
+.navbar-default
+{
+    background : #1582c2;
+    border: none;
+}
+
+.navbar-default .navbar-nav > li > a,
+.navbar-default .navbar-nav >li > a:focus
+{
     color: white;
     background : #1582c2;
-    font-family: 'Calibri';
     font-size: 20px;
     font-weight: bold;
-    border: none;
-    text-transform: uppercase;
 }
 
+/*Navbar items*/
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > li > a:hover{
-    background: white;
-    color: #1582c2;
-}
-
+.navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > .open > a:focus,
 .navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .active a
 {
-    background: white;
-    color: #1582c2;
-}
-
-.navbar-default .navbar-nav > .active a{
     background: white;
     color: #1582c2;
 }
@@ -39,38 +39,59 @@
     color: white;
 }
 
-.navbar-default .navbar-nav li #signup:hover
-{
-    background: white;
-    color: #ED5565;
-}
-
+.navbar-default .navbar-nav li #signup:hover,
 .navbar-default .navbar-nav li #signup.active
 {
     background: white;
     color: #ED5565;
 }
 
+.img_user_navbar
+{
+    border-radius: 50%;
+    border-width: 2px;
+    border-style: solid;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    border-color: #ececec;
+}
+
+.membership_navbar .dropdown-toggle
+{
+    padding-top: 12px;
+    padding-bottom: 8px;
+}
+
+/*Dropdown Menu*/
 .dropdown-menu{
     background: white;
     border: 1px solid #1582c2;
+    padding: 0px;
+    color: #696969;
 }
 
-.language_picker .dropdown-menu
+.dropdown-menu li a
 {
-    background: white;
-    border: 1px solid #1582c2
+    color: #696969;
 }
 
-.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a
+.signin_form_navbar .dropdown-menu
 {
-    color: white;
+    padding: 15px;
+    min-width: 250px;
 }
 
-.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a:hover,
-.navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a:focus
+@media screen and (max-width: 767px)
 {
-    background: #EEE;
+    #signin_feedback.text-danger,
+    #signin_feedback.text-success,
+    .navbar-default .navbar-nav .open.signin_form_navbar .dropdown-menu > li,
+    .navbar-default .navbar-nav .open.language_picker_navbar .dropdown-menu > li > a,
+    .navbar-default .navbar-nav .open.membership_navbar .dropdown-menu > li > a
+    {
+        color: white;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -94,20 +115,16 @@
         margin-top: -23px;
     }
 
-    .language_picker .dropdown-menu:before
+    .language_picker_navbar .dropdown-menu:before
     {
         margin-right: 27px;
-        margin-top: -14px;
+        margin-top: -9px;
     }
 
-    .navbar-default .navbar-nav .open.language_picker .dropdown-menu > li > a
+    .membership_navbar .dropdown-menu:before
     {
-        color: black;
-    }
-
-    .navbar-default .signin_form_navbar
-    {
-        color: black;
+        margin-right: 60px;
+        margin-top: -9px;
     }
 }
 

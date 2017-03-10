@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootflat/2.0.4/css/bootflat.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,27 +31,29 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${!empty user_id}">
-                        <li><a href="<c:url value="/signout" />">${lang["SIGN_OUT"]}</a></a></li>
-                        </c:if>
-                        <c:if test="${empty user_id}">
+                        <li class="dropdown membership_navbar">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img class="img_user_navbar" src="<c:url value="/img/a.jpg"/>" />${user_username} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<c:url value="/membership/account" />"><i class="fa fa-user" aria-hidden="true"></i> ${lang["MY_ACCOUNT"]}</a></li>
+                                <li><a href="<c:url value="/signout" />"><i class="fa fa-power-off" aria-hidden="true"></i> ${lang["SIGN_OUT"]}</a></li>
+                            </ul>
+                        </li>
+                    </c:if>
+                    <c:if test="${empty user_id}">
                         <li class="dropdown signin_form_navbar">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">${lang["SIGN_IN"]}  <span class="caret"></span></a>
-                            <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                            <ul class="dropdown-menu">
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <form id="signin_form" role="form" method="post" action="">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="navbar_username">*Username</label>
-                                                    <input type="text" class="form-control" id="navbar_username" placeholder="${lang["USERNAME"]}" name="signin_username"
-                                                           data-fv-notempty="true"
-                                                           data-fv-notempty-message="The username is required">
+                                                    <input type="text" class="form-control" id="navbar_username" placeholder="${lang["USERNAME"]}" name="signin_username">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="sr-only" for="navbar_password">*Password</label>
-                                                    <input type="password" class="form-control" id="navbar_password" placeholder="${lang["PASSWORD"]}" name="signin_password"
-                                                           data-fv-notempty="true"
-                                                           data-fv-notempty-message="The password is required">
+                                                    <input type="password" class="form-control" id="navbar_password" placeholder="${lang["PASSWORD"]}" name="signin_password">
                                                 </div>
                                                 <div class="checkbox">
                                                     <label>
@@ -69,7 +72,7 @@
                         </li>
                         <li><a ${navbar == "signup" ? 'class="active"' : ""} href="<c:url value="/signup"/>" id="signup">${lang["SIGN_UP"]}</a></li>
                         </c:if>
-                    <li class="dropdown language_picker">
+                    <li class="dropdown language_picker_navbar">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="flag-icon flag-icon-${lang["langCode"]}"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <c:forEach var="language" items="${listLanguages}">

@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import com.eword.general.RequestUtils;
 import java.io.IOException;
@@ -13,10 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This filter checks if the user is connected. If not, they are redirected.
+ * This filter checks if the user is NOT connected. If they are, they are
+ * redirected.
  */
-@WebFilter({"/lists", "/lists/*"})
-public class LoggedoutFilter implements Filter {
+@WebFilter("/signup")
+public class LoggedinFilter implements Filter {
 
     /**
      * Name of the session attribute containing the user's id
@@ -29,14 +30,15 @@ public class LoggedoutFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
         //We get the adress to which the user will be redirected
         String address = RequestUtils.getPreviousPage(req);
 
-        //If the user is not connected, they are redirected
-        if (req.getSession().getAttribute(ATT_USER_ID) == null) {
+        //If the user is connected, they are redirected
+        if (req.getSession().getAttribute(ATT_USER_ID) != null) {
             res.sendRedirect(address);
             return;
         }

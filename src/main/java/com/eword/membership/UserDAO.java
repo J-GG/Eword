@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

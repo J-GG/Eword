@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import com.eword.general.StringUtils;
 import javax.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import com.eword.general.StringUtils;
 import com.eword.lang.Lang;
@@ -18,6 +18,11 @@ public class AuthenticationBusiness {
      * Name of the session attribute containing the id of the user
      */
     private static final String ATT_USER_ID = "user_id";
+
+    /**
+     * Name of the cookie storing the user's username
+     */
+    private static final String ATT_USER_USERNAME = "user_username";
 
     /**
      * Name of the cookie storing the id
@@ -50,6 +55,8 @@ public class AuthenticationBusiness {
         //Information about the user are set
         session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(user.getLanguage()));
         session.setAttribute(ATT_USER_ID, user.getId());
+        session.setAttribute(ATT_USER_USERNAME, user.getUsername());
+
         if (rememberMe) {
             //The user id is hashed and stored in a cookie
             String hashedId = StringUtils.sha256(String.valueOf(user.getId()));

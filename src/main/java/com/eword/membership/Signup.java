@@ -1,4 +1,4 @@
-package com.eword.users;
+package com.eword.membership;
 
 import java.io.IOException;
 import javax.ejb.EJB;
