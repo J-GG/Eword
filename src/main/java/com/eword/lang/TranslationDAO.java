@@ -21,7 +21,7 @@ public class TranslationDAO {
     private final static String EXTENSION = ".properties";
 
     /**
-     * PATH to the the properties files containing the translations
+     * PATH to the properties files containing the translations
      */
     private final static String TRANSLATIONS_PATH = "";
 

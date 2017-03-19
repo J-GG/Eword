@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * This filter checks if the user is connected. If not, they are redirected.
  */
-@WebFilter({"/lists", "/lists/*"})
+@WebFilter({"/lists", "/lists/*", "/membership/*"})
 public class LoggedoutFilter implements Filter {
 
     /**

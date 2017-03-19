@@ -22,7 +22,12 @@ public class Lang {
     /**
      * Key of the translation Map to retrieve the code of the language
      */
-    private final static String KEY_LANG_CODE = "langCode";
+    private final static String KEY_LANG_CODE = "LANG_CODE";
+
+    /**
+     * Key of the translation Map giving the display name of the language
+     */
+    private final static String KEY_LANG_NAME = "DISPLAY_NAME";
 
     /**
      * Map of translations sorted by Language
@@ -42,9 +47,10 @@ public class Lang {
 
         //Creation of the Map of Languages
         for (Language lang : Language.values()) {
-            Map<String, String> firstTranslation = new HashMap<>();
-            firstTranslation.put(KEY_LANG_CODE, lang.getCode());
-            TRANSLATIONS.put(lang, firstTranslation);
+            Map<String, String> languageInformation = new HashMap<>();
+            languageInformation.put(KEY_LANG_CODE, lang.getCode());
+            languageInformation.put(KEY_LANG_NAME, lang.getName());
+            TRANSLATIONS.put(lang, languageInformation);
         }
 
         //Each translation is added to the Map of its Language

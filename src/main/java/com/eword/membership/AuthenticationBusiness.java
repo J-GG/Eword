@@ -20,7 +20,7 @@ public class AuthenticationBusiness {
     private static final String ATT_USER_ID = "user_id";
 
     /**
-     * Name of the cookie storing the user's username
+     * Name of the session attribute storing the user's username
      */
     private static final String ATT_USER_USERNAME = "user_username";
 

@@ -49,16 +49,14 @@ public class Signin extends HttpServlet {
         Map<String, String> translations = (Map<String, String>) session.getAttribute(ATT_LANG);
 
         //We verify that the user exists
-        UserBusiness userBusiness = new UserBusiness();
-        User user = userBusiness.getUserFromLogin(userDAO, req);
+        User user = UserBusiness.getUserFromLogin(userDAO, req);
         boolean authenticate = (user != null);
         String message = "\"" + translations.get(TR_USER_DOESNT_EXIST) + "\"";
 
         //If the user exists, we set information as session attributes
         if (authenticate) {
             boolean rememberMeChecked = Boolean.valueOf(req.getParameter(PARAM_REMEMBER_ME));
-            AuthenticationBusiness authenticationBusiness = new AuthenticationBusiness();
-            authenticationBusiness.authenticatedUser(user, rememberMeChecked, userDAO, req, resp);
+            AuthenticationBusiness.authenticatedUser(user, rememberMeChecked, userDAO, req, resp);
 
             message = "\"" + translations.get(TR_LOGGED_IN_SUCCESSFULLY) + "\"";
         }

@@ -32,10 +32,13 @@
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${!empty user_id}">
                         <li class="dropdown membership_navbar">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img class="img_user_navbar" src="<c:url value="/img/a.jpg"/>" />${user_username} <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="picture_membership_navbar" style="background-image:url('<c:url value="/images/pictures/${user.picture}" />')" alt="Your picture" /></span>
+                                <span class="username_membership_navbar"><c:out value="${user_username}" /> <span class="caret"></span></span>
+                            </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="<c:url value="/membership/account" />"><i class="fa fa-user" aria-hidden="true"></i> ${lang["MY_ACCOUNT"]}</a></li>
-                                <li><a href="<c:url value="/signout" />"><i class="fa fa-power-off" aria-hidden="true"></i> ${lang["SIGN_OUT"]}</a></li>
+                                <li><a href="<c:url value="/membership/account" />"><span class="fa fa-user" aria-hidden="true"></span> ${lang["MY_ACCOUNT"]}</a></li>
+                                <li><a href="<c:url value="/signout" />"><span class="fa fa-power-off" aria-hidden="true"></span> ${lang["SIGN_OUT"]}</a></li>
                             </ul>
                         </li>
                     </c:if>
@@ -46,7 +49,7 @@
                                 <li>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <form id="signin_form" role="form" method="post" action="">
+                                            <form id="signin_form" role="form" method="post" action="<c:url value="/authenticate" />">
                                                 <div class="form-group">
                                                     <label class="sr-only" for="navbar_username">*Username</label>
                                                     <input type="text" class="form-control" id="navbar_username" placeholder="${lang["USERNAME"]}" name="signin_username">
@@ -73,7 +76,7 @@
                         <li><a ${navbar == "signup" ? 'class="active"' : ""} href="<c:url value="/signup"/>" id="signup">${lang["SIGN_UP"]}</a></li>
                         </c:if>
                     <li class="dropdown language_picker_navbar">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="flag-icon flag-icon-${lang["langCode"]}"></span> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="flag-icon flag-icon-${lang["LANG_CODE"]}"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <c:forEach var="language" items="${listLanguages}">
                                 <li><a href="<c:url value="/lang/${language.code}" />"><span class="flag-icon flag-icon-${language.code}"></span> ${language.name}</a></li>

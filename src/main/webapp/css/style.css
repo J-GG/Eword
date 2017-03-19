@@ -46,21 +46,37 @@ body{
     color: #ED5565;
 }
 
-.img_user_navbar
+.picture_membership_navbar
 {
     border-radius: 50%;
     border-width: 2px;
     border-style: solid;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin-right: 5px;
     border-color: #ececec;
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+}
+
+.username_membership_navbar
+{
+    float: right;
+    padding-top: 12px;
+}
+
+@media screen and (max-width: 767px)
+{
+    .username_membership_navbar
+    {
+        position: absolute;
+    }
 }
 
 .membership_navbar .dropdown-toggle
 {
-    padding-top: 12px;
-    padding-bottom: 8px;
+    padding: 4px 3px 3px 15px;
 }
 
 /*Dropdown Menu*/
@@ -91,6 +107,15 @@ body{
     .navbar-default .navbar-nav .open.membership_navbar .dropdown-menu > li > a
     {
         color: white;
+    }
+
+    .navbar-default .navbar-nav .open.language_picker_navbar .dropdown-menu > li > a:focus,
+    .navbar-default .navbar-nav .open.language_picker_navbar .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open.membership_navbar .dropdown-menu > li > a:focus,
+    .navbar-default .navbar-nav .open.membership_navbar .dropdown-menu > li > a:hover
+    {
+        color: #1582c2;
+        background: white;
     }
 }
 
@@ -264,6 +289,114 @@ h2
 .loading
 {
     background: url('../img/loader.gif') no-repeat center;
+}
+
+.img_form
+{
+    text-align: center;
+}
+
+.img_box
+{
+    position: relative;
+    display: inline-block;
+}
+
+.img_box img
+{
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.img_box:hover img
+{
+    opacity: 0.5;
+}
+
+.img_overlay
+{
+    transition: 0.5s linear;
+}
+
+.img_box:hover
+{
+    cursor: pointer;
+}
+
+.img_box:hover .img_overlay
+{
+    background: rgba(21, 130, 194, 0.35);
+    width: 100%;
+    height: 100%;
+}
+
+.edit_icon
+{
+    display: none;
+    z-index: 1;
+}
+
+.img_box:hover .edit_icon
+{
+    display: block;
+    position: absolute;
+    top:50%;
+    left:50%;
+    color: white;
+    transform: translateY(-50%) translateX(-50%);
+    font-size: 2em;
+}
+
+.img_overlay_loading
+{
+    background: url('../img/loader.gif') no-repeat center;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translateY(-50%) translateX(-50%);
+    z-index:1;
+    display: none;
+}
+
+.img_uploader
+{
+    visibility: hidden;
+    height: 0;
+}
+
+.img_box_user_account
+{
+    width: 150px;
+    height: 150px;
+}
+
+.account_username
+{
+    font-size: 25px;
+    word-break: break-all;
+}
+
+.account_edit_value
+{
+    cursor: pointer;
+}
+
+.account_edit_value i
+{
+    opacity: 0;
+}
+
+.account_edit_value:hover i
+{
+    opacity: 1;
 }
 
 /** Footer **/

@@ -10,7 +10,17 @@
             <div class="col-xd-12">
                 <div class="alert alert-${empty form.errors ? "success" : "danger"} alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    ${form.result}
+                    <c:choose>
+                        <c:when test="${empty form.errors}">
+                            You successfully registered ! We're pleased that you have chosen to become part of the community.<br />
+                            <ul>
+                                <li><a href="<c:url value="/" />">Return to the home page</a></li>
+                            </ul>
+                        </c:when>
+                        <c:otherwise>
+                            Your registration failed
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
@@ -34,18 +44,14 @@
                                    data-fv-stringlength="true"
                                    data-fv-stringlength-min="4"
                                    data-fv-stringlength-max="30"
-                                   data-fv-stringlength-message="The username must be at least 4 and no more than 30 characters long"
-
-                                   data-fv-regexp="true"
-                                   data-fv-regexp-regexp="^[a-zA-Z0-9_\.]+$"
-                                   data-fv-regexp-message="The username can only consist of alphabetical, number, dot and underscore">
+                                   data-fv-stringlength-message="The username must be at least 4 and no more than 30 characters long">
 
                             <c:if test="${!empty form}">
                                 <span class="form-control-feedback glyphicon
                                       ${!empty form && empty form.errors['username'] ? 'glyphicon-ok' : ''}
                                       ${!empty form && !empty form.errors['username'] ? 'glyphicon-remove' : ''}"
                                       ></span>
-                                <c:if test="${!empty form.errors['username']}"><small class="help-block" data-fv-for="username" data-validator="perso" >${form.errors["username"]}</small></c:if>
+                                <c:if test="${!empty form.errors['username']}"><small class="help-block" data-fv-for="username" data-validator="perso">${form.errors["username"]}</small></c:if>
                             </c:if>
                         </div>
                     </div>
@@ -63,19 +69,18 @@
                                        data-fv-stringlength="true"
 
                                        data-fv-stringlength-min="4"
-                                       data-fv-stringlength-max="255"
-                                       data-fv-stringlength-message="The password must be at least 4 and no more than 255 characters long"
+                                       data-fv-stringlength-message="The password must be at least 4 characters"
 
                                        data-fv-callback="true"
                                        data-fv-callback-message="The password is weak"
                                        data-fv-callback-callback="passwordStrength">
-                                <span tabindex="100" class="add-on input-group-addon unmask_password"><i class="icon-eye-open glyphicon glyphicon-eye-open"></i></span>
+                                <span tabindex="100" class="add-on input-group-addon unmask_password"><span class="icon-eye-open glyphicon glyphicon-eye-open"></span></span>
                             </div>
                             <div class="progress password-progress">
                                 <div id="strengthBar" class="progress-bar" role="progressbar" style="width: 0;"></div>
                             </div>
                             <c:if test="${!empty form}">
-                                <c:if test="${!empty form.errors['password']}"><small class="help-block" data-fv-for="password">${form.errors["password"]}</small></c:if>
+                                <c:if test="${!empty form.errors['password']}"><small class="help-block" data-fv-for="password" data-validator="perso">${form.errors["password"]}</small></c:if>
                             </c:if>
                         </div>
                     </div>
