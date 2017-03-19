@@ -1,5 +1,6 @@
 package com.eword.general;
 
+import com.eword.general.util.StringUtils;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
