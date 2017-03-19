@@ -25,6 +25,11 @@ public class AuthenticationBusiness {
     private static final String ATT_USER_USERNAME = "user_username";
 
     /**
+     * Name of the session attribute storing the user's picture
+     */
+    private static final String ATT_USER_PICTURE = "user_picture";
+
+    /**
      * Name of the cookie storing the id
      */
     private static final String COOKIE_ID_NAME = "id";
@@ -56,6 +61,7 @@ public class AuthenticationBusiness {
         session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(user.getLanguage()));
         session.setAttribute(ATT_USER_ID, user.getId());
         session.setAttribute(ATT_USER_USERNAME, user.getUsername());
+        session.setAttribute(ATT_USER_PICTURE, user.getPicture());
 
         if (rememberMe) {
             //The user id is hashed and stored in a cookie

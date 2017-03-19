@@ -33,7 +33,7 @@
                     <c:if test="${!empty user_id}">
                         <li class="dropdown membership_navbar">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="picture_membership_navbar" style="background-image:url('<c:url value="/images/pictures/${user.picture}" />')" alt="Your picture" /></span>
+                                <span class="picture_membership_navbar" style="background-image:url('<c:url value="/images/pictures/${user_picture}" />')" alt="Your picture" /></span>
                                 <span class="username_membership_navbar"><c:out value="${user_username}" /> <span class="caret"></span></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">

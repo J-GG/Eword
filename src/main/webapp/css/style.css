@@ -389,12 +389,12 @@ h2
     cursor: pointer;
 }
 
-.account_edit_value i
-{
+.account_edit_value span
+{   
     opacity: 0;
 }
 
-.account_edit_value:hover i
+.account_edit_value:hover span
 {
     opacity: 1;
 }
