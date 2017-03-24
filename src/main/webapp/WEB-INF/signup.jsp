@@ -29,7 +29,7 @@
 
     <c:if test="${empty form || !empty form.errors}">
         <div class="row">
-            <form class="form-horizontal col-lg-12" id="signup_form" action="<c:url value="/signup" />" method="POST">
+            <form class="form-horizontal col-xs-12" id="signup_form" action="<c:url value="/signup" />" method="POST">
 
                 <div class="row">
                     <div class="form-group
@@ -58,16 +58,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group
+                    <div class="form-group no-feedback-icon
                          ${!empty form && !empty form.errors['password'] ? 'has-feedback has-error' : ''}">
-                        <label for="password" class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-2  control-label">*${lang["PASSWORD"]} : </label>
+                        <label for="password" class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-2 control-label">*${lang["PASSWORD"]} : </label>
                         <div class="col-xs-offset-2 col-xs-8 col-sm-offset-0 col-sm-4">
                             <div class="input-append input-group">
                                 <input type="password" class="form-control" id="signup_password" name="password"
                                        data-fv-notempty="true"
                                        data-fv-notempty-message="The password is required"
-                                       data-fv-stringlength="true"
 
+                                       data-fv-stringlength="true"
                                        data-fv-stringlength-min="4"
                                        data-fv-stringlength-message="The password must be at least 4 characters"
 

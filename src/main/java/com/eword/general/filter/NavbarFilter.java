@@ -38,6 +38,12 @@ public class NavbarFilter implements Filter {
      */
     private static final String NAVBAR_SIGNUP = "signup";
 
+    /**
+     * Value of the request attribute indicating that the user in on the
+     * membership tab
+     */
+    private static final String NAVBAR_MEMBERSHIP = "membership";
+
     @Override
     public void destroy() {
     }
@@ -53,6 +59,7 @@ public class NavbarFilter implements Filter {
         Pattern pattern_home = Pattern.compile(context + "/$");
         Pattern pattern_lists = Pattern.compile(context + "/lists(/?)([0-9]*)$");
         Pattern pattern_signup = Pattern.compile(context + "/signup$");
+        Pattern pattern_membership = Pattern.compile(context + "/membership");
 
         String navbar = null;
         if (pattern_home.matcher(req.getRequestURI()).find()) {
@@ -61,6 +68,8 @@ public class NavbarFilter implements Filter {
             navbar = NAVBAR_LISTS;
         } else if (pattern_signup.matcher(req.getRequestURI()).find()) {
             navbar = NAVBAR_SIGNUP;
+        } else if (pattern_membership.matcher(req.getRequestURI()).find()) {
+            navbar = NAVBAR_MEMBERSHIP;
         }
 
         //The variable is set into a request attribute

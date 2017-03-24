@@ -1,7 +1,7 @@
 package com.eword.membership.business;
 
-import com.eword.membership.bean.User;
 import com.eword.general.util.StringUtils;
+import com.eword.membership.bean.User;
 import com.eword.membership.dao.UserDAO;
 import javax.servlet.http.HttpServletRequest;
 

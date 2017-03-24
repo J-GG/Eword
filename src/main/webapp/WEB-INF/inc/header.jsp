@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootflat/2.0.4/css/bootflat.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
         <link rel="stylesheet" href="<c:url value="/css/style.css"/>">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -17,6 +18,8 @@
         <script src="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/formValidation.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.formvalidation/0.6.1/js/framework/bootstrap.min.js"></script>
         <script src="//cdn.bootcss.com/zxcvbn/4.4.1/zxcvbn.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js"></script>
         <script src="<c:url value="/js/script.js"/>"></script>
     </head>
 
@@ -31,7 +34,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <c:if test="${!empty user_id}">
-                        <li class="dropdown membership_navbar">
+                        <li class="dropdown membership_navbar  ${navbar == "membership" ? 'active' : ""}">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 <span class="picture_membership_navbar" style="background-image:url('<c:url value="/images/pictures/${user_picture}" />')" alt="Your picture" /></span>
                                 <span class="username_membership_navbar"><c:out value="${user_username}" /> <span class="caret"></span></span>

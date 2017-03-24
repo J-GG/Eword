@@ -2,6 +2,8 @@ package com.eword.membership.business;
 
 import com.eword.membership.dao.UserDAO;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.regex.Pattern;
 import javax.servlet.http.Part;
 
 /**
@@ -35,19 +37,36 @@ public class UserFieldsValidation {
     private static final String[] TYPES = {"image/jpeg", "image/png"};
 
     /**
+     * Check whether the email is correct or not. Throw an exception if the
+     * email is incorrect
+     *
+     * @param email The email to check
+     * @throws Exception
+     */
+    static void emailValidation(String email) throws Exception {
+        Pattern pattern_email = Pattern.compile("^[a-z0-9._-]+@[a-z0-9._-]{2,}\\.[a-z]{2,4}$");
+        if (email != null) {
+            if (!pattern_email.matcher(email).find()) {
+                throw new Exception("The value is not a valid email address");
+            }
+        } else {
+            throw new Exception("The email is required");
+        }
+    }
+
+    /**
      * Check whether the password is correct or not. Throw an exception if the
      * password is incorrect
      *
-     * @param password The password to check. It can't be null and has a minimal
-     * size
+     * @param password The password to check
      */
     public static void passwordValidation(String password) throws Exception {
         if (password != null) {
             if (password.length() < MIN_LENGTH_PASSWORD) {
-                throw new Exception("The username must be at least " + MIN_LENGTH_PASSWORD + " characters");
+                throw new Exception("The password must be at least " + MIN_LENGTH_PASSWORD + " characters");
             }
         } else {
-            throw new Exception("A password is required");
+            throw new Exception("The password is required");
         }
     }
 
@@ -92,4 +111,15 @@ public class UserFieldsValidation {
         }
     }
 
+    /**
+     * Check whether the birth date is correct or not. Throw an exception if the
+     * birth date is incorrect
+     *
+     * @param birthdate The birth date to check
+     */
+    public static void birthdateValidation(Date birthdate) throws Exception {
+        if (birthdate.after(new Date())) {
+            throw new Exception("Your birth date cannot be in the future");
+        }
+    }
 }

@@ -27,7 +27,7 @@ body{
 .navbar-default .navbar-nav > .open > a:focus,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .active a
+.navbar-default .navbar-nav > .active > a
 {
     background: white;
     color: #1582c2;
@@ -245,31 +245,26 @@ h2
 }
 
 /** Forms **/
-
-#signin_form
-{
-    text-transform: none;
-}
-
-#signin_form .checkbox label
-{
-    padding-left: 20px;
-    top: -5px;
-    margin-bottom: 0px;
-}
-
 .form-group.has-error
 {
     margin-bottom: 0px;
 }
 
-.password-progress {
-    margin-top: 10px;
-    margin-bottom: 0;
+.no-feedback-icon i.glyphicon-remove:before,
+.no-feedback-icon i.glyphicon-ok:before
+{
+    display: none;
 }
 
-.password-progress.progress {
-    margin-bottom: 0;
+.password-progress {
+    margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+
+    .password-progress.progress {
+        margin-bottom: 0;
+    }
 }
 
 .has-success .add-on.input-group-addon{
@@ -372,6 +367,63 @@ h2
     height: 0;
 }
 
+.input_box .ajax_forms_edit_value
+{
+    margin-top: 7px;
+}
+
+.input_overlay
+{
+    transition: 0.5s linear;
+}
+
+.input_box:hover .input_overlay
+{
+    position: absolute;
+    background: rgba(21, 130, 194, 0.35);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.input_box:hover .edit_icon
+{
+    display: block;
+    position: absolute;
+    top:50%;
+    left:50%;
+    color: white;
+    transform: translateY(-50%) translateX(-50%);
+    font-size: 1em;
+}
+
+.input_box.input-group[class*=col-]
+{
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/** SIGNIN **/
+#signin_form
+{
+    text-transform: none;
+}
+
+#signin_form .checkbox label
+{
+    padding-left: 20px;
+    top: -5px;
+    margin-bottom: 0px;
+}
+
+/** ACCOUNT **/
+.ajax_forms.form-horizontal .has-feedback .form-control-feedback
+{
+    right: 65px;
+    z-index: 12;
+}
+
 .img_box_user_account
 {
     width: 150px;
@@ -384,19 +436,14 @@ h2
     word-break: break-all;
 }
 
-.account_edit_value
+.ajax_forms_edit_value
 {
     cursor: pointer;
 }
 
-.account_edit_value span
-{   
-    opacity: 0;
-}
-
-.account_edit_value:hover span
+.ajax_forms_edit_value .fa
 {
-    opacity: 1;
+    font-size: 1.3em;
 }
 
 /** Footer **/

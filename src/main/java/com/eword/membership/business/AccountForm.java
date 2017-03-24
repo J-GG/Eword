@@ -1,5 +1,8 @@
 package com.eword.membership.business;
 
+import com.eword.general.util.StringUtils;
+import com.eword.lang.business.Lang;
+import com.eword.lang.business.LocalDate;
 import com.eword.membership.bean.User;
 import com.eword.membership.dao.UserDAO;
 import java.io.BufferedInputStream;
@@ -7,6 +10,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +36,42 @@ public class AccountForm {
     private static final String PARAM_PICTURE = "picture";
 
     /**
+     * Name of the field of the form containing the email address
+     */
+    private static final String PARAM_EMAIL = "email";
+
+    /**
+     * Name of the field of the form containing the old password
+     */
+    private static final String PARAM_OLD_PASSWORD = "old_password";
+
+    /**
+     * Name of the field of the form containing the new password
+     */
+    private static final String PARAM_NEW_PASSWORD = "new_password";
+
+    /**
+     * Name of the field of the form containing the language
+     */
+    private static final String PARAM_LANGUAGE = "language";
+
+    /**
+     * Name of the field of the form containing the birth date
+     */
+    private static final String PARAM_BIRTHDATE = "birthdate";
+
+    /**
+     * Name of the request attribute containing the translations for the display
+     * language chosen by the user
+     */
+    private final static String ATT_LANG = "lang";
+
+    /**
      * Map of all the input errors
      */
     private HashMap<String, String> errors = new HashMap<>();
+
+    private String json;
 
     /**
      * Return the extension of the part
@@ -72,9 +110,11 @@ public class AccountForm {
         int id = (int) session.getAttribute(ATT_USER_ID);
         User user = UserBusiness.getUserFromId(id, userDAO);
 
-        Part part = null;
+        //We deal with each of the inputs
+        //Picture
+        Part picture = null;
         try {
-            part = req.getPart("user_picture");
+            picture = req.getPart(PARAM_PICTURE);
         } catch (IllegalStateException ex) {
             errors.put(PARAM_PICTURE, "The file exceeds the allowed size");
         } catch (IOException ex) {
@@ -83,28 +123,35 @@ public class AccountForm {
             errors.put(PARAM_PICTURE, "The file exceeds the allowed size");
         }
 
-        if (errors.isEmpty()) {
-            try {
-                UserFieldsValidation.pictureValidation(part);
-            } catch (Exception ex) {
-                errors.put(PARAM_PICTURE, ex.getMessage());
-            }
+        if (picture != null) {
+            pictureTreatment(picture, user, req);
         }
 
-        String filename = null;
-        if (errors.isEmpty()) {
-            try {
-                String userID = String.valueOf(req.getSession().getAttribute(ATT_USER_ID));
-                filename = userID + getExtension(part);
-                String path = req.getServletContext().getInitParameter(CONTEXT_PARAM_PICTURES_PATH);
-                writeFile(part, filename, path);
-                deletePicture(path, user.getPicture(), filename, userID);
-            } catch (IOException e) {
-                errors.put(PARAM_PICTURE, "Cannot save the file");
-            }
+        //Password
+        String oldPassword = req.getParameter("old_password");
+        String newPassword = req.getParameter("new_password");
+
+        if (oldPassword != null && newPassword != null) {
+            passwordTreatment(oldPassword, newPassword, user);
         }
-        if (errors.isEmpty()) {
-            user.setPicture(filename);
+
+        //Email
+        String email = req.getParameter(PARAM_EMAIL);
+
+        if (email != null) {
+            emailTreatment(email, user);
+        }
+
+        //Language
+        String languageCode = req.getParameter("language");
+        if (languageCode != null) {
+            languageTreatment(languageCode, user, req);
+        }
+
+        //Birthdate
+        String birthdate = req.getParameter("birthdate");
+        if (birthdate != null) {
+            birthdateTreatment(birthdate, user);
         }
 
         //If there is no error, the user is updated
@@ -113,6 +160,126 @@ public class AccountForm {
         }
 
         return user;
+    }
+
+    private void birthdateTreatment(String birthdate, User user) {
+        Date standardBirthdate = null;
+
+        if (!birthdate.isEmpty()) {
+            try {
+                standardBirthdate = LocalDate.getStandardDate(birthdate, user.getLanguage());
+            } catch (ParseException ex) {
+                errors.put(PARAM_BIRTHDATE, "The value is not a valid date format");
+            }
+
+            if (errors.get(PARAM_BIRTHDATE) == null) {
+                try {
+                    UserFieldsValidation.birthdateValidation(standardBirthdate);
+                } catch (Exception ex) {
+                    errors.put(PARAM_BIRTHDATE, ex.getMessage());
+                }
+            }
+        }
+
+        if (errors.get(PARAM_BIRTHDATE) == null) {
+            user.setBirthDate(standardBirthdate);
+        }
+
+        addJson(PARAM_BIRTHDATE, user.getLocalBirthDate());
+    }
+
+    private void emailTreatment(String email, User user) {
+        try {
+            if (!email.isEmpty()) {
+                UserFieldsValidation.emailValidation(email);
+            }
+        } catch (Exception ex) {
+            errors.put(PARAM_EMAIL, ex.getMessage());
+        }
+
+        if (errors.get(PARAM_EMAIL) == null) {
+            user.setEmail(email);
+        }
+
+        addJson(PARAM_EMAIL, email);
+    }
+
+    private void languageTreatment(String languageCode, User user, HttpServletRequest req) {
+        Lang.Language language = Lang.Language.getLanguageFromCode(languageCode);
+        String value = null;
+
+        if (language == null) {
+            errors.put(PARAM_LANGUAGE, "No language is selected");
+        } else {
+            //The session attribute storing the language is updated
+            HttpSession session = req.getSession();
+            session.setAttribute(ATT_LANG, Lang.getInstance().getTranslations(language));
+
+            value = language.getName();
+            user.setLanguage(language);
+        }
+
+        addJson(PARAM_LANGUAGE, value);
+    }
+
+    private void passwordTreatment(String oldPassword, String newPassword, User user) {
+
+        if (!StringUtils.sha256(oldPassword).equals(user.getPassword())) {
+            errors.put(PARAM_OLD_PASSWORD, "The old password is incorrect");
+        }
+
+        try {
+            UserFieldsValidation.passwordValidation(newPassword);
+        } catch (Exception ex) {
+            errors.put(PARAM_NEW_PASSWORD, ex.getMessage());
+        }
+
+        if (errors.get(PARAM_OLD_PASSWORD) == null && errors.get(PARAM_NEW_PASSWORD) == null) {
+            user.setPassword(StringUtils.sha256(newPassword));
+        }
+
+        addJson(PARAM_OLD_PASSWORD, "**********");
+        addJson(PARAM_NEW_PASSWORD, "**********");
+    }
+
+    private void pictureTreatment(Part picture, User user, HttpServletRequest req) {
+        try {
+            UserFieldsValidation.pictureValidation(picture);
+        } catch (Exception ex) {
+            errors.put(PARAM_PICTURE, ex.getMessage());
+        }
+
+        String filename = null;
+        if (errors.get(PARAM_PICTURE) == null) {
+            try {
+                String userID = String.valueOf(req.getSession().getAttribute(ATT_USER_ID));
+                filename = userID + getExtension(picture);
+                String path = req.getServletContext().getInitParameter(CONTEXT_PARAM_PICTURES_PATH);
+                writeFile(picture, filename, path);
+                deletePicture(path, user.getPicture(), filename, userID);
+            } catch (IOException e) {
+                errors.put(PARAM_PICTURE, "Cannot save the file");
+            }
+        }
+
+        if (errors.get(PARAM_PICTURE) == null) {
+            user.setPicture(filename);
+        }
+
+        addJson(PARAM_PICTURE, filename);
+    }
+
+    private void addJson(String param, String value) {
+        if (json == null) {
+            json = "{";
+        } else {
+            json = json.substring(0, json.length() - 1) + ",";
+        }
+        json += "\"" + param + "\": {\"error\": \"" + errors.get(param) + "\", \"value\" : \"" + value + "\"}}";
+    }
+
+    public String getJson() {
+        return json;
     }
 
     /**

@@ -1,9 +1,9 @@
 package com.eword.membership.servlet;
 
 import com.eword.membership.bean.User;
+import com.eword.membership.business.AccountForm;
 import com.eword.membership.business.UserBusiness;
 import com.eword.membership.dao.UserDAO;
-import com.eword.membership.business.AccountForm;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -62,14 +62,13 @@ public class Account extends HttpServlet {
 
         //The form is checked by the AccountForm object
         AccountForm accountForm = new AccountForm();
-        User user = accountForm.accountValidation(userDAO, req);
+        accountForm.accountValidation(userDAO, req);
 
         //The JSON file is formed and printed
-        String json = "{\"error\": \"" + accountForm.getErrors().get("picture") + "\", \"picture\" : \"" + user.getPicture() + "\"}";
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        out.print(json);
+        out.print(accountForm.getJson());
     }
 
 }
